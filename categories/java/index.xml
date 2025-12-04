@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Java on 霁川</title><link>https://lumos-nova.github.io/categories/java/</link><description>Recent content from 霁川</description><generator>Hugo</generator><language>zh-cn</language><managingEditor>charlie552@126.com (Lumos)</managingEditor><webMaster>charlie552@126.com (Lumos)</webMaster><copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright><lastBuildDate>Thu, 27 Nov 2025 20:37:31 +0800</lastBuildDate><atom:link href="https://lumos-nova.github.io/categories/java/index.xml" rel="self" type="application/rss+xml"/><item><title>CyclicBarrier</title><link>https://lumos-nova.github.io/post/cyclicbarrier-z2vhiw0.html</link><pubDate>Wed, 29 Oct 2025 18:12:24 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/cyclicbarrier-z2vhiw0.html</guid><description>
+<![CDATA[<h1>CyclicBarrier</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="cyclicbarrier">
+<a class="header-anchor" href="#cyclicbarrier"></a>
+CyclicBarrier
+</h1><h2 id="什么是-cyclicbarrier">
+<a class="header-anchor" href="#%e4%bb%80%e4%b9%88%e6%98%af-cyclicbarrier"></a>
+什么是 CyclicBarrier？
+</h2><p>​<code>CyclicBarrier</code>​ 是 Java 并发包中提供的一个同步辅助类，用于协调多个线程的执行。它允许一组线程互相等待，直到所有线程都到达一个特定的屏障点（barrier point）后再继续执行。与 <code>CountDownLatch</code>​ 不同，<code>CyclicBarrier</code> 可以被重用，即当所有线程到达屏障点后，它可以被重置，再次用于等待下一次的线程集合。</p>
+        
+        <hr><p>本文2025-10-29首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-11-27</p>]]></description><category>Java</category></item></channel></rss>

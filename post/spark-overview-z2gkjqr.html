@@ -1,0 +1,579 @@
+<!doctype html><html lang=zh-cn data-theme-mode=auto><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>Spark概述 | Lumos</title><meta name=description content><meta name=keywords content="Spark"><script>window.siteConfig=JSON.parse('{"anchor_icon":null,"base":"https://lumos-nova.github.io/","clipboard":{"copyright":{"count":50,"enable":false,"license_type":"by-nc-sa"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ","pt-br":"Falha ao copiar (ﾟ⊿ﾟ)ﾂ","zh-cn":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-tw":"複製失敗 (ﾟ⊿ﾟ)ﾂ"},"success":{"en":"Copy successfully (*^▽^*)","ja":"コピー成功 (*^▽^*)","pt-br":"Copiado com sucesso (*^▽^*)","zh-cn":"复制成功 (*^▽^*)","zh-tw":"複製成功 (*^▽^*)"}},"code_block":{"expand":true},"icon_font":"4552607_4k4bc36ef96","outdate":{"daysago":180,"enable":false,"message":{"en":"This article was last updated on {time}. Please note that the content may no longer be applicable.","ja":"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。","pt-br":"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.","zh-cn":"本文最后更新于 {time}，请注意文中内容可能已不适用。","zh-tw":"本文最後更新於 {time}，請注意文中內容可能已不適用。"}}}')</script><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=preload as=style href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7cNoto%20Serif%20SC:400,400italic,700,700italic%7c&amp;display=swap" media=print onload='this.media="all"'><link rel=preload href=//at.alicdn.com/t/c/font_4552607_4k4bc36ef96.woff2 as=font type=font/woff2 crossorigin=anonymous><link rel=stylesheet href=/css/loader.min.ac746e154f756f8220326eeb52a719f142ab038be5a8ddf30ea5ef15ef2356ea.css><meta property="og:type" content="website"><meta property="og:title" content="Spark概述 | Lumos"><meta property="og:description" content><meta property="og:url" content="https://lumos-nova.github.io/post/spark-overview-z2gkjqr.html"><meta property="og:site_name" content="霁川"><meta property="og:image" content="/"><meta property="article:author" content="Lumos"><meta property="article:published_time" content="2025-11-25T10:03:09+08:00"><meta property="article:modified_time" content="2025-11-29T03:38:54+08:00"><meta property="article:tag" content="Spark"><meta name=twitter:card content="summary"><meta name=twitter:image content="/"><link rel="shortcut icon" href=/favicon.ico><link rel=stylesheet href=/css/main.min.71afa644f13a120753766cb58698622ef8f31e70ba5a0989fba926596e2fc1b4.css><link rel=preload as=style href=https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css integrity=sha384-IfxC36XL/toUyJ939C73PcgMuRzAZuIzZxE38drsmO5p6jD7ei+Zx/1oA/0l8ysE crossorigin=anonymous onload='this.onload=null,this.rel="stylesheet"'><link rel=preload as=style href=https://npm.webcache.cn/katex@0.16.24/dist/katex.min.css integrity=sha384-tTgKLjMYmJr94v8qu2PE5MUGSMbyN2xiH266JUB3gpm8vnnJywd1dWSOEfrFz+YI crossorigin=anonymous onload='this.onload=null,this.rel="stylesheet"'><script src=https://npm.webcache.cn/pace-js@1.2.4/pace.min.js integrity=sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8 crossorigin=anonymous></script><link rel=stylesheet href=https://npm.webcache.cn/@reimujs/aos@0.1.2/dist/aos.css integrity=sha384-GMRP93c6Hkz9JVKGAuRR3nTS7M07RwPgTFenXiosjq2VbVgvdDNcz1g6Mkj8AONa crossorigin=anonymous></head><body><div id=loader><div class="loading-left-bg loading-bg"></div><div class="loading-right-bg loading-bg"></div><div class=spinner-box><div class="loading-taichi rotate"><svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" shape-rendering="geometricPrecision"><path d="M303.5 432a80 80 0 01-12 160 80 80 0 0112-160z" fill="var(--red-1, #ff5252)"/><path d="M512 65a447 447 0 010 894V929a417 417 0 000-834 417 417 0 000 834v30a447 447 0 010-894zm0 30A417 417 0 01929 512 208.5 208.5.0 01720.5 720.5V592a80 80 0 000-160 80 80 0 000 160V720.5A208.5 208.5.0 01512 512 208.5 208.5.0 00303.5 303.5 208.5 208.5.0 0095 512 417 417 0 01512 95z" fill="var(--red-1, #ff5252)"/></svg></div><div class=loading-word>加载中...</div></div></div></div><script>var time=null,loaderEl=document.getElementById("loader"),startLoading=()=>{time=Date.now(),loaderEl.classList.remove("loading")},hideLoader=()=>{document.body.style.overflow="auto",loader.classList.add("loading")},endLoading=()=>{time?Date.now()-time>500?(time=null,hideLoader()):(setTimeout(endLoading,500-(Date.now()-time)),time=null):hideLoader()};window.addEventListener("DOMContentLoaded",endLoading),loaderEl.addEventListener("click",endLoading)</script><div id=copy-tooltip></div><div id=lang-tooltip>本文章没有找到对应的语言版本</div><div id=heatmap-tooltip></div><div id=container><div id=wrap><div id=header-nav><nav id=main-nav aria-label="Primary navigation"><a class=main-nav-link-wrap href=/><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class=main-nav-link>首页</span>
+</a><a class=main-nav-link-wrap href=/archives><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class=main-nav-link>归档</span>
+</a><a class=main-nav-link-wrap href=/about><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class=main-nav-link>关于</span>
+</a><a class=main-nav-link-wrap href=/friend><div class='main-nav-icon icon rotate'>&#xe62b;</div><span class=main-nav-link>友链</span>
+</a><a id=main-nav-toggle class=nav-icon aria-label="Toggle navigation" role=button></a></nav><nav id=sub-nav aria-label="Secondary navigation"><a id=nav-search-btn class="nav-icon popup-trigger" title=搜索 aria-label=搜索></a></nav><a href=https://github.com/lumos-nova class=triangle-badge title=github target=_blank rel="noopener nofollow noreferrer"><div class="icon icon-github triangle-badge-icon"></div></a></div><header id=header aria-label="Site header"><picture></picture><img crossorigin=anonymous fetchpriority=high src=/images/banner.png alt=Spark概述><div id=header-outer><div id=header-title><span id=logo><h1 data-aos=slide-up>Spark概述</h1></span><h2 id=subtitle-wrap data-aos=slide-down></h2></div></div></header><div id=content aria-label="Page content" class=sidebar-left><aside id=sidebar aria-label=Sidebar><div class="sidebar-wrapper-container sticky"><div class=sidebar-wrapper><div class=sidebar-wrap data-aos=fade-up><div class=sidebar-toc-sidebar><h3 class=toc-title>文章目录</h3><div class="sidebar-toc-wrapper toc-div-class"><nav id=TableOfContents><ul><li><a href=#1-大数据开发的总体架构>1. 大数据开发的总体架构</a><ul><li><a href=#数据来源层>数据来源层</a></li><li><a href=#数据传输层数据采集>数据传输层（数据采集）</a></li><li><a href=#数据存储层>数据存储层</a></li><li><a href=#资源管理层>资源管理层</a></li><li><a href=#数据计算层>数据计算层</a></li><li><a href=#任务调度层>任务调度层</a></li><li><a href=#业务模型层>业务模型层</a></li></ul></li><li><a href=#2-spark的概念>2. Spark的概念</a><ul><li><a href=#四大特点>四大特点</a></li><li><a href=#主要组件>主要组件</a></li><li><a href=#专业术语>专业术语</a></li></ul></li><li><a href=#3-spark任务执行流程>3. Spark任务执行流程</a><ul><li><a href=#简单版><img src="assets/1648111504430.png#id=TqdX5&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt>简单版</a></li><li><a href=#复杂版>复杂版</a></li><li><a href=#从代码的角度看spark执行流程>从代码的角度看Spark执行流程</a></li></ul></li></ul><ul><li><a href=#1-spark支持多种运行模式>1. Spark支持多种运行模式</a></li><li><a href=#2-yarn集群架构>2. YARN集群架构</a><ul><li><a href=#21-yarn基本架构>2.1 Yarn基本架构</a></li><li><a href=#22-yarn的执行流程>2.2 YARN的执行流程：</a></li></ul></li><li><a href=#3-local模式>3. Local模式</a><ul><li><a href=#31-安装部署>3.1 安装部署</a></li><li><a href=#32-入门案例>3.2 入门案例</a></li></ul></li><li><a href=#4-standalone模式>4. Standalone模式</a><ul><li><a href=#41-什么是standalone>4.1 什么是Standalone?</a></li><li><a href=#42-spark执行流程>4.2 Spark执行流程</a></li><li><a href=#43-安装部署>4.3 安装部署</a></li><li><a href=#44-入门案例>4.4 入门案例</a></li></ul></li><li><a href=#5-yarn模式>5. Yarn模式</a><ul><li><a href=#51-什么叫yarn模式>5.1 什么叫Yarn模式</a></li><li><a href=#52-yarn模式安装部署>5.2 Yarn模式安装部署</a></li><li><a href=#53-入门案例>5.3 入门案例</a></li></ul></li><li><a href=#6-任务提交>6. 任务提交</a><ul><li><a href=#61-mrstandaloneyarn对比>6.1 MR+Standalone+Yarn对比</a></li><li><a href=#62-deploy-mode>6.2 deploy-mode</a></li><li><a href=#63-spark-submit>6.3 Spark-submit</a></li></ul></li></ul></nav></div></div><div class="sidebar-common-sidebar hidden"><div class=sidebar-author><img data-src=/avatar/avatar.webp data-sizes=auto alt=Lumos class=lazyload><div class=sidebar-author-name>Lumos</div><div class=sidebar-description></div></div><div class=sidebar-state><div class=sidebar-state-article><div>文章</div><div class=sidebar-state-number>23</div></div><a class=sidebar-state-category href=/categories/ aria-label=sidebar-state-category-link><div>分类</div><div class=sidebar-state-number>5</div></a><a class=sidebar-state-tag href=/tags/ aria-label=sidebar-state-tag-link><div>标签</div><div class=sidebar-state-number>8</div></a></div><div class=sidebar-social></div><div class=sidebar-menu><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/ aria-label=首页></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>首页</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/archives aria-label=归档></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>归档</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/about aria-label=关于></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>关于</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/friend aria-label=友链></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>友链</div></div></div></div><div class=sidebar-btn-wrapper style=position:static><div class="sidebar-toc-btn current"></div><div class=sidebar-common-btn></div></div></div></div><div class=sidebar-widget></div></div></aside><section id=main aria-label="Main content"><article class="h-entry article" itemscope itemtype=https://schema.org/BlogPosting><div class=article-inner data-aos=fade-up><div class=article-meta><div class=article-date><span class="article-date-link icon-calendar" data-aos=zoom-in><time datetime="2025-11-25 10:03:09 +0800 +0800" itemprop=datePublished>2025-11-25</time>
+<time style=display:none id=post-update-time>2025-11-29</time>
+</span><span class="article-date-link icon-calendar-plus" data-aos=zoom-in><time datetime="2025-11-29 03:38:54 +0800 +0800" itemprop=dateModified>2025-11-29</time></span></div><div class=article-category><a class=article-category-link href=/categories/%e5%a4%a7%e6%95%b0%e6%8d%ae data-aos=zoom-in>大数据</a></div></div><div class=hr-line></div><div class="e-content article-entry" itemprop=articleBody><h1 id=spark概述><a class=header-anchor href=#spark%e6%a6%82%e8%bf%b0></a>Spark概述</h1><h1 id=spark概述及主要组件><a class=header-anchor href=#spark%e6%a6%82%e8%bf%b0%e5%8f%8a%e4%b8%bb%e8%a6%81%e7%bb%84%e4%bb%b6></a>Spark概述及主要组件</h1><h2 id=1-大数据开发的总体架构><a class=header-anchor href=#1-%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e7%9a%84%e6%80%bb%e4%bd%93%e6%9e%b6%e6%9e%84></a>1. 大数据开发的总体架构</h2><p><img src=http://img.charlee.top/blog202311251315350.png alt></p><h3 id=数据来源层><a class=header-anchor href=#%e6%95%b0%e6%8d%ae%e6%9d%a5%e6%ba%90%e5%b1%82></a>数据来源层</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>1、MySQL等结构化数据库
+</span></span><span class=line><span class=cl>2、日志、json文件、xml文件等半结构化数据
+</span></span><span class=line><span class=cl>3、视频、语音等非结构化数据
+</span></span><span class=line><span class=cl> 		- 需要使用DataX、kettle、sqoop、flume、Kafka等数据传输工具将数据传入到数据仓库（HDFS）中
+</span></span></code></pre></div><h3 id=数据传输层数据采集><a class=header-anchor href=#%e6%95%b0%e6%8d%ae%e4%bc%a0%e8%be%93%e5%b1%82%e6%95%b0%e6%8d%ae%e9%87%87%e9%9b%86></a>数据传输层（数据采集）</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>通过各种数据传输工具，将不同源的数据统一导入到HDFS中
+</span></span><span class=line><span class=cl>     Sqoop：Apache下免费开源的采集框架。数据源是关系型数据库。
+</span></span><span class=line><span class=cl>     DataX：阿里巴巴提供的开源免费的数据采集框架。用于离线采集。官网：https://github.com/alibaba/dataX
+</span></span><span class=line><span class=cl>     Kettle：可视化的方式进行数据采集。数据源很多，可以是关系型数据库，也可以是其他。
+</span></span><span class=line><span class=cl>     Flume：Apache下，专门采集日志的框架（JS埋点、Nginx访问日志），实时采集的框架
+</span></span><span class=line><span class=cl>     Canal：阿里巴巴提供的开源免费数据采集框架。用于实时采集。https://github.com/alibaba/canal
+</span></span><span class=line><span class=cl>     FlinkCDC：是阿里开源的数据采集框架，支持实时采集，可以采集增量和全量
+</span></span><span class=line><span class=cl>     小结：采集在大数据的地位不重要，面试也不是核心点。
+</span></span></code></pre></div><h3 id=数据存储层><a class=header-anchor href=#%e6%95%b0%e6%8d%ae%e5%ad%98%e5%82%a8%e5%b1%82></a>数据存储层</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>将大量数据存储起来，来满足数据的快速检索与统计
+</span></span><span class=line><span class=cl>     HDFS:Hadoop Distributed File System（Hadoop分布式文件系统）。
+</span></span><span class=line><span class=cl>     Hive:不存储数据。
+</span></span><span class=line><span class=cl>     HBase:本质上也是把数据存储在HDFS上。
+</span></span><span class=line><span class=cl>     Kafka:可以存储海量数据。不能永久存储，它属于消息队列，只是临时存储。
+</span></span><span class=line><span class=cl>     ElasticSearch: ES，可以存储海量数据。用于搜索领域。
+</span></span><span class=line><span class=cl>     对象存储（Object Storage）: OSS（阿里云）、MinIO（开源免费）、AWS（亚马逊对象存储，S3）存储空间利用率要高。
+</span></span></code></pre></div><h3 id=资源管理层><a class=header-anchor href=#%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e5%b1%82></a>资源管理层</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>对分布式系统的资源进行统一管理
+</span></span><span class=line><span class=cl>     Yarn: 专用的大数据 资源管理框架，通用资源管理系统，通常用于管理CPU、内存，不仅可以集成Hadoop还能集成Spark\Flink等大数据框架
+</span></span></code></pre></div><h3 id=数据计算层><a class=header-anchor href=#%e6%95%b0%e6%8d%ae%e8%ae%a1%e7%ae%97%e5%b1%82></a>数据计算层</h3><p><img src=http://img.charlee.top/blog202311251316485.png alt></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>该层主要是对HDFS上存储的大量数据，进行离线或实时计算
+</span></span><span class=line><span class=cl>     离线计算引擎
+</span></span><span class=line><span class=cl>         MapReduce: 第一代大数据计算框架，分而治之的思想。
+</span></span><span class=line><span class=cl>         hive: 底层走的仍然是MR
+</span></span><span class=line><span class=cl>         spark: 分布式内存迭代计算框架。
+</span></span><span class=line><span class=cl>     实时计算引擎
+</span></span><span class=line><span class=cl>         Spark: 分布式内存迭代计算框架。
+</span></span><span class=line><span class=cl>         Flink:
+</span></span></code></pre></div><h3 id=任务调度层><a class=header-anchor href=#%e4%bb%bb%e5%8a%a1%e8%b0%83%e5%ba%a6%e5%b1%82></a>任务调度层</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>对整个大数据系统，进行集中的任务调度
+</span></span><span class=line><span class=cl>     Apache Oozie: 老的调度系统
+</span></span><span class=line><span class=cl>     Crontab: Linux自带的调度系统
+</span></span><span class=line><span class=cl>     Azkaban: 阿兹卡班，不是Apache的，非常好用。
+</span></span><span class=line><span class=cl>     DolphinScheduler: DS，海豚调度系统
+</span></span></code></pre></div><h3 id=业务模型层><a class=header-anchor href=#%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%b1%82></a>业务模型层</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>将经过处理后的数据，进行可视化展示以及业务逻辑处理
+</span></span><span class=line><span class=cl>     FineReport
+</span></span><span class=line><span class=cl>     Echarts
+</span></span></code></pre></div><h2 id=2-spark的概念><a class=header-anchor href=#2-spark%e7%9a%84%e6%a6%82%e5%bf%b5></a>2. Spark的概念</h2><p>Spark是一个快速通用的集群计算系统，分布式内存计算框架。<br>​​<img src=http://img.charlee.top/blog202311251316861.png alt></p><h3 id=四大特点><a class=header-anchor href=#%e5%9b%9b%e5%a4%a7%e7%89%b9%e7%82%b9></a>四大特点</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-properties data-lang=properties><span class=line><span class=cl><span class=na>1.</span> <span class=s>快速: 运行速度快，基于内存迭代，减少数据落盘</span>
+</span></span><span class=line><span class=cl><span class=na>2.</span> <span class=s>易用: 简单使用，且支持多种编程语言，如：Scala、Java、Python、R</span>
+</span></span><span class=line><span class=cl><span class=na>3.</span> <span class=s>通用: 可以用于处理离线、实时、图计算、机器学习等各种大数据场景</span>
+</span></span><span class=line><span class=cl><span class=na>4.</span> <span class=s>到处运行: 可以本地运行、独立模式运行、Yarn运行、mesos、k8s等</span>
+</span></span></code></pre></div><h3 id=主要组件><a class=header-anchor href=#%e4%b8%bb%e8%a6%81%e7%bb%84%e4%bb%b6></a>主要组件</h3><p><img src=http://img.charlee.top/blog202311251317114.png alt></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Spark Core: Spark的核心模块，主要有一下两部分的功能
+</span></span><span class=line><span class=cl>     1、负责任务调度、内存管理、错误恢复、与存储系统交互
+</span></span><span class=line><span class=cl>     2、对RDD（弹性分布式数据集）的API定义
+</span></span><span class=line><span class=cl> Spark SQL: 用于结构化数据处理，提供了SQL查询接口
+</span></span><span class=line><span class=cl>     1、可以使用SQL或hiveSQL来方便的查询数据
+</span></span><span class=line><span class=cl>     2、支持将SQL融入Spark应用程序的开发过程中
+</span></span><span class=line><span class=cl> Spark Streaming: 对实时数据的流式计算组件
+</span></span><span class=line><span class=cl>     1、将流式计算分解成一个个小批量处理的作业
+</span></span><span class=line><span class=cl>     2、支持对实时数据流进行可伸缩、高吞吐量、高容错对的流处理
+</span></span><span class=line><span class=cl>     3、提供了用来操作数据流
+</span></span><span class=line><span class=cl>     4、通过将流数据按指定时间片累计未RDD，然后将每个RDD进行批处理，进而实现大规模的流数据处理
+</span></span><span class=line><span class=cl> MLlib: 机器学习库
+</span></span><span class=line><span class=cl> GraphX: 图(知识图谱)计算库
+</span></span></code></pre></div><h3 id=专业术语><a class=header-anchor href=#%e4%b8%93%e4%b8%9a%e6%9c%af%e8%af%ad></a>专业术语</h3><table><thead><tr><th>名词</th><th>解释</th><th>说明</th></tr></thead><tbody><tr><td>Cluster Manager</td><td>资源管理的主节点</td><td>长服务</td></tr><tr><td>Worker</td><td>资源管理的从节点</td><td>长服务</td></tr><tr><td>Application</td><td>Spark的应用程序</td><td>Spark的应用，一个完整的main方法程序，spark-submit提交的一个应用</td></tr><tr><td>Driver</td><td>Spark程序的驱动进程</td><td>伴随着应用产生，1个Application有且仅有1个Driver</td></tr><tr><td>Executor</td><td>Spark程序的执行进程</td><td>伴随着应用产生，Driver把任务调度到Executor上执行</td></tr><tr><td>Job</td><td>Spark的作业</td><td>Action算子划分Job</td></tr><tr><td>DAG</td><td>Spark的作业</td><td>有向无环图，Job就是DAG</td></tr><tr><td>Stage</td><td>Spark的阶段</td><td>Shuffle划分Stage</td></tr><tr><td>TaskSet</td><td>Spark的任务集</td><td>任务集，就是同一个Stage中的各个Task组成的集合</td></tr><tr><td>Task</td><td>Spark的任务</td><td>一个分区上的一系列操作就是一个Task，一个task一个线程</td></tr><tr><td>SparkContext</td><td>Spark上下文对象</td><td>Spark运行时的上下文环境，启动会自动创建TaskScheduler和DAGScheduler</td></tr><tr><td>DAGScheduler</td><td>DAG调度器</td><td>逻辑调度器，负责任务逻辑调度规划</td></tr><tr><td>TaskScheduler</td><td>任务调度器</td><td>物理调度器，负责任务具体落地执行</td></tr><tr><td>shuffle dependency</td><td>宽依赖</td><td>join、ByKey、repartition等算子产生</td></tr><tr><td>narrow dependency</td><td>窄依赖</td><td>Stage内部就是窄依赖，能够并行计算</td></tr></tbody></table><h2 id=3-spark任务执行流程><a class=header-anchor href=#3-spark%e4%bb%bb%e5%8a%a1%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b></a>3. Spark任务执行流程</h2><p><img src=http://img.charlee.top/blog202311251317322.png alt></p><ol><li>任务划分：Spark 将任务划分为多个 stages 和 tasks。每个 stage 包含多个 tasks，且每个 task 是对数据集中⼀个分区的计算。</li><li>任务调度：Spark 会将每个 stage 中的 tasks 分配给集群中的 Executor 进⾏计算。任务调度分为两个阶段：第⼀阶段为 Task Scheduler，在该阶段 Spark 会将任务分配给可⽤的 Executor；第⼆阶段为 DAG Scheduler，Spark 会在该阶段优化任务执⾏计划。</li><li>数据分区：Spark 将数据集划分为多个分区，每个分区会被分配到集群中的某⼀个 Executor 上进⾏计算。每个 Executor 会处理多个分区，且每个分区只会被⼀个 Executor 计算。</li><li>任务执⾏：Executor 会从 Driver 程序中获取任务信息，并根据任务信息从对应的数据分区中获取数据，然后执⾏具体的计算任务。</li><li>任务结果收集：Executor 执⾏完任务后，将计算结果返回给 Driver 程序。Driver 程序会收集所有 Executor 返回的计算结果，并进⾏汇总。</li><li>结果输出：最后，Driver 程序会将计算结果写⼊到外部存储系统（如 Hadoop HDFS 或者 Apache Cassandra）中。</li></ol><p>在这个过程中，Spark 会利⽤⼀些优化技术来提⾼任务执⾏的效率，例如任务合并、数据本地化、缓存等。通过这些技术，Spark 可以在⼤规模数据处理和分析任务中实现⾼效的计算和快速的结果输出。</p><h3 id=简单版><a class=header-anchor href=#%e7%ae%80%e5%8d%95%e7%89%88></a><img src="assets/1648111504430.png#id=TqdX5&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt>简单版</h3><p><img src=http://img.charlee.top/blog202311251317375.png alt></p><blockquote><p>1、client提交任务，哪台服务器提交，哪台就是client
+2、client向ResourceManager申请启动ApplicationMaster
+3、RM收到请求后，找一台NodeManager来启动ApplicationMaster
+4、被找到的NodeManager会在一个Container资源容器中启动ApplicationMaster，并在其中启动一个Driver进程
+5、启动Driver后，会由ApplicationMaster向RsourceManager申请资源用于启动Executor
+6、RM会返回一个NodeManager列表
+7、ApplicationMaster会根据该列表在每个NodeManager的container中启动一个Executor
+8、Executor会反向注册给Driver，
+9、Driver会发送task给Executor，并监控task的执行，Executor执行任务，返回执行结果给Driver
+10、Driver会回收结果，发送下一个task，直到所有任务完成
+11、Driver会注销executor，同时向resourcemanager申请注销自己</p></blockquote><h3 id=复杂版><a class=header-anchor href=#%e5%a4%8d%e6%9d%82%e7%89%88></a>复杂版</h3><p><img src=http://img.charlee.top/blog202311251318169.png alt></p><h3 id=从代码的角度看spark执行流程><a class=header-anchor href=#%e4%bb%8e%e4%bb%a3%e7%a0%81%e7%9a%84%e8%a7%92%e5%ba%a6%e7%9c%8bspark%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b></a>从代码的角度看Spark执行流程</h3><p><img src=http://img.charlee.top/blog202311251318286.png alt></p><h1 id=spark运行模式><a class=header-anchor href=#spark%e8%bf%90%e8%a1%8c%e6%a8%a1%e5%bc%8f></a>Spark运行模式</h1><h2 id=1-spark支持多种运行模式><a class=header-anchor href=#1-spark%e6%94%af%e6%8c%81%e5%a4%9a%e7%a7%8d%e8%bf%90%e8%a1%8c%e6%a8%a1%e5%bc%8f></a>1. Spark支持多种运行模式</h2><ul><li>Local模式：Spark运行在本地</li><li>Standalone模式：Spark运行在Standalone集群内</li><li>Yarn模式：Spark提交给Yarn运行</li><li>Mesos：了解</li><li>k8s：了解</li></ul><p><strong>分布式计算</strong>：分布式的程序在分布式的资源管理框架中运行，称之为分布式计算。
+Python可不可以对数据做处理？
+为什么不用Python处理，而使用Hive甚至是Spark呢？</p><h2 id=2-yarn集群架构><a class=header-anchor href=#2-yarn%e9%9b%86%e7%be%a4%e6%9e%b6%e6%9e%84></a>2. YARN集群架构</h2><h3 id=21-yarn基本架构><a class=header-anchor href=#21-yarn%e5%9f%ba%e6%9c%ac%e6%9e%b6%e6%9e%84></a>2.1 Yarn基本架构</h3><p>经典的主/从（Master/Slave）架构，主要由ResourceManager 、 NodeManager 、 ApplicationMaster 和Container等几个组件构成。<br>​​<img src=http://img.charlee.top/blog202311251319946.png alt></p><ol><li>ResourceManager</li><li>NodeManager</li><li>ApplicationMaster</li><li>Container</li><li>Task</li></ol><h3 id=22-yarn的执行流程><a class=header-anchor href=#22-yarn%e7%9a%84%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b></a>2.2 YARN的执行流程：</h3><p><img src=http://img.charlee.top/blog202311251319021.png alt></p><ol><li>客户端提交应用程序（可以是MapReduce程序、Spark程序等）到ResourceManager。</li><li>ResourceManager分配用于运行ApplicationMaster的Container，然后与NodeManager通信，要求它在该Container中启动ApplicationMaster。ApplicationMaster启动后，它将负责此应用程序的整个生命周期。</li><li>ApplicationMaster向ResourceManager注册（注册后可以通过ResourceManager查看应用程序的运行状态）并请求运行应用程序各个Task所需的Container（资源请求是对一些Container的请求）， 如果符合条件，ResourceManager就会分配给ApplicationMaster所需的Container（表达为Container ID和主机名）。</li><li>ApplicationMaster 请 求 NodeManager 使 用 这 些Container来运行应用程序的相应Task（将Task发布到指定的Container中运行）。</li><li>各个运行中的Task会通过RPC协议向ApplicationMaster汇报自己的状态和进度 ，这样一旦某个Task运行失败 ，ApplicationMaster就可以对其重新启动。当应用程序运行完成时，ApplicationMaster会向ResourceManager申请注销自己</li></ol><p><img src=http://img.charlee.top/blog202311251319978.png alt></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>1、客户端申请提交运行MR程序
+</span></span><span class=line><span class=cl> 2、ResourceManager验证是否合法，如果合法，随机选择一台NodeManager启动AppMaster
+</span></span><span class=line><span class=cl> 3、AppMaster根据任务分配向ResourceManager申请Task运行的Container资源
+</span></span><span class=line><span class=cl> 4、ResourceManager根据资源情况分配对应的Container信息返回给AppMaster
+</span></span><span class=line><span class=cl> 5、AppMaster根据ResourceManager分配的Container信息，将Container信息分发给对应的NodeManager
+</span></span><span class=line><span class=cl> 6、NodeManager收到Container信息，启动MapTask和ReduceTask运行
+</span></span><span class=line><span class=cl> 7、每个Task将自己运行的信息汇报给AppMaster，AppMaster监控每个Task的状态，直到Task结束
+</span></span><span class=line><span class=cl> 8、AppMaster等到所有Task结束返回运行结果
+</span></span></code></pre></div><h2 id=3-local模式><a class=header-anchor href=#3-local%e6%a8%a1%e5%bc%8f></a>3. Local模式</h2><p>本地启动一个进程模拟主、从节点，完成数据处理操作。不需要提交到集群中运行，适用于开发和测试的过程中</p><h3 id=31-安装部署><a class=header-anchor href=#31-%e5%ae%89%e8%a3%85%e9%83%a8%e7%bd%b2></a>3.1 安装部署</h3><p>1、服务器安装Spark</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1>#1.基础路径</span>
+</span></span><span class=line><span class=cl> <span class=nb>cd</span> /export/software
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.下载（已经提供，不需要下载，上传到服务器即可）</span>
+</span></span><span class=line><span class=cl> wget https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.解压</span>
+</span></span><span class=line><span class=cl> tar -xf spark-3.1.2-bin-hadoop3.2.tgz  -C /export/server/
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#4.场景软连接</span>
+</span></span><span class=line><span class=cl> <span class=nb>cd</span> /export/server
+</span></span><span class=line><span class=cl> mv spark-3.1.2-bin-hadoop3.2/ spark-local
+</span></span><span class=line><span class=cl> ln -s spark-local spark
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#5.切换到spark目录</span>
+</span></span><span class=line><span class=cl> <span class=nb>cd</span> spark
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#6.查看目录</span>
+</span></span><span class=line><span class=cl> ll
+</span></span></code></pre></div><p>2、安装Python环境（Anaconda）</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 1、下载Anaconda安装包：https://repo.anaconda.com/archive/</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 2.进入目录，上传anaconda安装包</span>
+</span></span><span class=line><span class=cl> <span class=nb>cd</span> /export/software
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 3.运行安装脚本</span>
+</span></span><span class=line><span class=cl> sh Anaconda3-2021.05-Linux-x86_64.sh
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 4.安装过程</span>
+</span></span><span class=line><span class=cl>     <span class=c1>#第一次：【直接回车，然后按q】</span>
+</span></span><span class=line><span class=cl>         Please, press ENTER to <span class=k>continue</span>
+</span></span><span class=line><span class=cl>         &gt;&gt;&gt;
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>     <span class=c1>#第二次：【输入yes】</span>
+</span></span><span class=line><span class=cl>         Do you accept the license terms? <span class=o>[</span>yes<span class=p>|</span>no<span class=o>]</span>
+</span></span><span class=line><span class=cl>         <span class=o>[</span>no<span class=o>]</span> &gt;&gt;&gt; yes
+</span></span><span class=line><span class=cl>         
+</span></span><span class=line><span class=cl>     <span class=c1>#第三次：【直接回车，等待】</span>
+</span></span><span class=line><span class=cl>         Anaconda3 will now be installed into this location:
+</span></span><span class=line><span class=cl>         /root/anaconda3
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>           - Press ENTER to confirm the location
+</span></span><span class=line><span class=cl>           - Press CTRL-C to abort the installation
+</span></span><span class=line><span class=cl>           - Or specify a different location below
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>         <span class=o>[</span>/root/anaconda3<span class=o>]</span> &gt;&gt;&gt;
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>     <span class=c1>#第四次：【输入yes，是否在用户的.bashrc文件中初始化Anaconda3的相关内容】</span>
+</span></span><span class=line><span class=cl>         Do you wish the installer to initialize Anaconda3
+</span></span><span class=line><span class=cl>         by running conda init? <span class=o>[</span>yes<span class=p>|</span>no<span class=o>]</span>
+</span></span><span class=line><span class=cl>         <span class=o>[</span>no<span class=o>]</span> &gt;&gt;&gt; yes
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 5.编辑/etc/profile文件，修改环境变量，添加如下内容</span>
+</span></span><span class=line><span class=cl> <span class=c1>#ANACONDA_HOME</span>
+</span></span><span class=line><span class=cl> <span class=nb>export</span> <span class=nv>ANACONDA_HOME</span><span class=o>=</span>/root/anaconda3
+</span></span><span class=line><span class=cl> <span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$PATH</span>:<span class=nv>$ANACONDA_HOME</span>/bin
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 6.在/root/.bashrc文件中最后，添加如下内容</span>
+</span></span><span class=line><span class=cl> <span class=nb>export</span> <span class=nv>JAVA_HOME</span><span class=o>=</span>/export/server/jdk1.8.0_241/
+</span></span><span class=line><span class=cl> <span class=nb>export</span> <span class=nv>PYSPARK_PYTHON</span><span class=o>=</span>/root/anaconda3/bin/python3
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 7.source环境变量</span>
+</span></span><span class=line><span class=cl> <span class=nb>source</span> /etc/profile
+</span></span><span class=line><span class=cl> <span class=nb>source</span> /root/.bashrc
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 8.校验，输入如下命令，如果报错，则执行第7步命令</span>
+</span></span><span class=line><span class=cl> python3
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 9.创建软连接【仅限校验失败时使用】 建立软连接，将系统的默认Python链接到Anaconda的Python环境</span>
+</span></span><span class=line><span class=cl> ln -s /root/anaconda3/bin/python3 /usr/bin/python3
+</span></span></code></pre></div><p>至此Spark本地模式环境安装部署完成。</p><h3 id=32-入门案例><a class=header-anchor href=#32-%e5%85%a5%e9%97%a8%e6%a1%88%e4%be%8b></a>3.2 入门案例</h3><p>Spark开发的基础步骤</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-properties data-lang=properties><span class=line><span class=cl><span class=c1>#1.构建Spark环境</span>
+</span></span><span class=line><span class=cl><span class=err> </span>
+</span></span><span class=line><span class=cl> <span class=c1>#2.数据输入（告诉Spark读取哪里的数据）</span>
+</span></span><span class=line><span class=cl><span class=err> </span>
+</span></span><span class=line><span class=cl> <span class=c1>#3.数据处理（对读取的数据做处理）</span>
+</span></span><span class=line><span class=cl><span class=err> </span>
+</span></span><span class=line><span class=cl> <span class=c1>#4.数据输出（对计算后的结果数据做保存，一般是外部存储介质）</span>
+</span></span><span class=line><span class=cl><span class=err> </span>
+</span></span><span class=line><span class=cl> <span class=c1>#5.停止Spark任务</span>
+</span></span></code></pre></div><p>WordCount入门案例<br>​​<img src=http://img.charlee.top/blog202311251320432.png alt></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=c1># 1.读取数据集</span>
+</span></span><span class=line><span class=cl><span class=n>input_rdd</span> <span class=o>=</span> <span class=n>sc</span><span class=o>.</span><span class=n>textFile</span><span class=p>(</span><span class=s2>&#34;file:///export/data/word.txt&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 2.查看input_rdd数据的总行数</span>
+</span></span><span class=line><span class=cl><span class=n>input_rdd</span><span class=o>.</span><span class=n>count</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 3.查看input_rdd前2行的数据</span>
+</span></span><span class=line><span class=cl><span class=n>input_rdd</span><span class=o>.</span><span class=n>take</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 4.对数据按照空格切割，转换为每个单词</span>
+</span></span><span class=line><span class=cl><span class=n>word_rdd</span> <span class=o>=</span> <span class=n>input_rdd</span><span class=o>.</span><span class=n>flatMap</span><span class=p>(</span><span class=k>lambda</span> <span class=n>line</span> <span class=p>:</span> <span class=n>line</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34; &#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 5.查看word_rdd数据的总行数</span>
+</span></span><span class=line><span class=cl><span class=n>word_rdd</span><span class=o>.</span><span class=n>count</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 6.查看word_rdd前2行的数据</span>
+</span></span><span class=line><span class=cl><span class=n>word_rdd</span><span class=o>.</span><span class=n>take</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 7.把每个单词转换为（单词，1）的形式</span>
+</span></span><span class=line><span class=cl><span class=n>tuple_rdd</span> <span class=o>=</span> <span class=n>word_rdd</span><span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=k>lambda</span> <span class=n>word</span> <span class=p>:</span> <span class=p>(</span><span class=n>word</span><span class=p>,</span><span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 8.查看tuple_rdd数据的总行数</span>
+</span></span><span class=line><span class=cl><span class=n>tuple_rdd</span><span class=o>.</span><span class=n>count</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 9.查看tuple_rdd前2行的数据</span>
+</span></span><span class=line><span class=cl><span class=n>tuple_rdd</span><span class=o>.</span><span class=n>take</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 10.对每一个元祖，根据单词进行reduce聚合</span>
+</span></span><span class=line><span class=cl><span class=n>result_rdd</span> <span class=o>=</span> <span class=n>tuple_rdd</span><span class=o>.</span><span class=n>reduceByKey</span><span class=p>(</span><span class=k>lambda</span> <span class=n>tmp</span><span class=p>,</span><span class=n>ele</span> <span class=p>:</span> <span class=n>tmp</span> <span class=o>+</span> <span class=n>ele</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 11.打印聚合后的结果</span>
+</span></span><span class=line><span class=cl><span class=n>result_rdd</span><span class=o>.</span><span class=n>foreach</span><span class=p>(</span><span class=k>lambda</span> <span class=n>x</span> <span class=p>:</span> <span class=nb>print</span><span class=p>(</span><span class=n>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 12.保存结果到外部</span>
+</span></span><span class=line><span class=cl><span class=n>result_rdd</span><span class=o>.</span><span class=n>saveAsTextFile</span><span class=p>(</span><span class=s2>&#34;file:///export/data/output&#34;</span><span class=p>)</span>
+</span></span></code></pre></div><h2 id=4-standalone模式><a class=header-anchor href=#4-standalone%e6%a8%a1%e5%bc%8f></a>4. Standalone模式</h2><h3 id=41-什么是standalone><a class=header-anchor href=#41-%e4%bb%80%e4%b9%88%e6%98%afstandalone></a>4.1 什么是Standalone?</h3><p>Standalone模式，就是Spark实现了一套自己的分布式资源管理和任务调度。类似于MapReduce+Yarn，如下表：</p><table><thead><tr><th><strong>概念</strong></th><th><strong>YARN</strong></th><th><strong>Spark Standalone</strong></th></tr></thead><tbody><tr><td>主节点</td><td>ResourceManager</td><td>Master</td></tr><tr><td>从节点</td><td>NodeManager</td><td>Worker</td></tr><tr><td>计算进程</td><td>Container</td><td>Executor</td></tr><tr><td>调度进程</td><td>AppMaster</td><td>Driver</td></tr></tbody></table><ul><li><strong>主：Master：管理节点</strong>，类比于YARN中的ResourceManager<ul><li>接受客户端请求：所有程序的提交，都是提交给主节点</li><li>管理从节点：通过心跳机制检测所有的从节点的健康状态</li><li>资源管理和任务调度：将所有从节点的资源在逻辑上合并为一个整体，将任务分配给不同的从节点</li></ul></li><li><strong>从：Worker：计算节点</strong>，类比于YARN中NodeManager<ul><li>使用自己所在节点的资源运行计算进程Executor：给每个计算进程分配一定的资源</li><li>所有Task线程计算任务就运行在Executor进程中</li><li>假设每台机器机器：32Core - 64GB</li><li>那么Worker的资源由配置决定，例如16Core - 32GB</li><li>表示Worker最多能使用这台机器的16Core32GB的资源用于计算</li></ul></li><li><strong>计算进程：Executor</strong>：类比于Yarn中的Container，为任务的计算提供资源</li><li><strong>调度进程：Driver：</strong> 类似于Yarn中的AppMaster，可以对任务进行解析、调度、监控</li></ul><h3 id=42-spark执行流程><a class=header-anchor href=#42-spark%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b></a>4.2 Spark执行流程</h3><p><img src=http://img.charlee.top/blog202311251320249.png alt><br>Spark的核心概念分为两个层面：</p><ul><li>资源层面：资源管理</li><li>任务层面：任务调度执行</li></ul><h4 id=资源层面><a class=header-anchor href=#%e8%b5%84%e6%ba%90%e5%b1%82%e9%9d%a2></a>资源层面</h4><p>Cluster Manager：集群主节点，Standalone模式就是Master，Yarn模式下就是ResourceManager，负责接收客户端请求，对集群资源的管理，从节点管理等。
+Worker Node：集群从节点，负责改节点资源管理
+功能：负责对整个集群资源的管理。
+注意：
+资源层面的进程，无论是否有任务提交，这些进程都是不间断运行的。</p><h4 id=计算层面><a class=header-anchor href=#%e8%ae%a1%e7%ae%97%e5%b1%82%e9%9d%a2></a>计算层面</h4><p>Driver Program：Driver进程，当任务提交时，在集群的主节点启动，负责任务的解析、调度，监控等。
+Executor：计算进程，当提交任务时，在集群的从节点启动，每一个Spark程序都至少有1个。
+功能：对提交到集群运行的任务进行解析、调度、执行、监控。
+注意：
+计算层面的进程，只有当任务提交时才有，任务执行完成后，进程被销毁，资源释放。</p><h4 id=小结><a class=header-anchor href=#%e5%b0%8f%e7%bb%93></a>小结</h4><p>Spark既能做到资源的管理，也能做到任务的调度，可以不依靠外部其他服务独立运行，完成对数据的统计分析。
+因此说Spark是一个统一的数据处理引擎。</p><h3 id=43-安装部署><a class=header-anchor href=#43-%e5%ae%89%e8%a3%85%e9%83%a8%e7%bd%b2></a>4.3 安装部署</h3><p><strong>前提：保证3个节点都成功安装上了Anaconda。</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1>#1.解压安装</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>software</span><span class=o>/</span>
+</span></span><span class=line><span class=cl> <span class=n>tar</span> <span class=o>-</span><span class=n>xf</span> <span class=n>spark</span><span class=o>-</span><span class=mf>3.1</span><span class=o>.</span><span class=mi>2</span><span class=o>-</span><span class=n>bin</span><span class=o>-</span><span class=n>hadoop3</span><span class=o>.</span><span class=mf>2.</span><span class=n>tgz</span> <span class=o>-</span><span class=n>C</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.重命名</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span>
+</span></span><span class=line><span class=cl> <span class=n>mv</span> <span class=n>spark</span><span class=o>-</span><span class=mf>3.1</span><span class=o>.</span><span class=mi>2</span><span class=o>-</span><span class=n>bin</span><span class=o>-</span><span class=n>hadoop3</span><span class=o>.</span><span class=mi>2</span> <span class=n>spark</span><span class=o>-</span><span class=n>standalone</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.重新构建软连接</span>
+</span></span><span class=line><span class=cl> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=n>spark</span>
+</span></span><span class=line><span class=cl> <span class=n>ln</span> <span class=o>-</span><span class=n>s</span> <span class=n>spark</span><span class=o>-</span><span class=n>standalone</span> <span class=n>spark</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ===========配置Spark环境========================</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.进入到spark的配置文件目录</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>conf</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.拷贝一个spark-env.sh文件</span>
+</span></span><span class=line><span class=cl> <span class=n>cp</span> <span class=n>spark</span><span class=o>-</span><span class=n>env</span><span class=o>.</span><span class=n>sh</span><span class=o>.</span><span class=n>template</span> <span class=n>spark</span><span class=o>-</span><span class=n>env</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.编辑spark-env.sh文件，添加如下内容</span>
+</span></span><span class=line><span class=cl> <span class=n>vim</span> <span class=n>spark</span><span class=o>-</span><span class=n>env</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># 61行（空行处）添加JVM环境路径以及Hadoop的配置文件路径，（注意：先按i键再插入）</span>
+</span></span><span class=line><span class=cl> <span class=k>export</span> <span class=n>JAVA_HOME</span><span class=o>=/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>jdk1</span><span class=o>.</span><span class=mf>8.0</span><span class=n>_241</span><span class=o>/</span>
+</span></span><span class=line><span class=cl> <span class=k>export</span> <span class=n>HADOOP_CONF_DIR</span><span class=o>=/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>hadoop</span><span class=o>/</span><span class=n>etc</span><span class=o>/</span><span class=n>hadoop</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=n>SPARK_MASTER_HOST</span><span class=o>=</span><span class=n>node1</span>             <span class=c1>#用于指定Master主节点的地址</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_MASTER_PORT</span><span class=o>=</span><span class=mi>7077</span>              <span class=c1>#用于指定Master任务提交端口</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_MASTER_WEBUI_PORT</span><span class=o>=</span><span class=mi>8080</span>        <span class=c1>#用于指定Master Web界面的端口，类似于YARN中的8088</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_WORKER_CORES</span><span class=o>=</span><span class=mi>1</span>                <span class=c1>#用于指定每个Worker能用机器多少核CPU</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_WORKER_MEMORY</span><span class=o>=</span><span class=mi>1</span><span class=n>g</span>              <span class=c1>#用于指定每个Worker能用机器多少内存   </span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_WORKER_PORT</span><span class=o>=</span><span class=mi>7078</span>              <span class=c1>#用于指定从节点的通信端口</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_WORKER_WEBUI_PORT</span><span class=o>=</span><span class=mi>8081</span>        <span class=c1>#用于指定从节点的Web端口</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_DAEMON_MEMORY</span><span class=o>=</span><span class=mi>1</span><span class=n>g</span>              <span class=c1>#运行进程使用的资源</span>
+</span></span><span class=line><span class=cl> <span class=n>SPARK_HISTORY_OPTS</span><span class=o>=</span><span class=s2>&#34;-Dspark.history.fs.logDirectory=hdfs://node1:8020/spark/eventLogs/ -Dspark.history.fs.cleaner.enabled=true&#34;</span>  <span class=c1># 配置Spark的HistoryServer进程日志存储配置</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ===================配置Spark属性===============</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.进入到spark的配置文件目录 ,拷贝一份新文件</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>conf</span>
+</span></span><span class=line><span class=cl> <span class=n>cp</span> <span class=n>spark</span><span class=o>-</span><span class=n>defaults</span><span class=o>.</span><span class=n>conf</span><span class=o>.</span><span class=n>template</span> <span class=n>spark</span><span class=o>-</span><span class=n>defaults</span><span class=o>.</span><span class=n>conf</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.编辑配置文件</span>
+</span></span><span class=line><span class=cl> <span class=n>vim</span> <span class=n>spark</span><span class=o>-</span><span class=n>defaults</span><span class=o>.</span><span class=n>conf</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.在文件最后添加如下内容</span>
+</span></span><span class=line><span class=cl> <span class=n>spark</span><span class=o>.</span><span class=n>eventLog</span><span class=o>.</span><span class=n>enabled</span>     <span class=bp>true</span>
+</span></span><span class=line><span class=cl> <span class=n>spark</span><span class=o>.</span><span class=n>eventLog</span><span class=o>.</span><span class=n>dir</span>         <span class=n>hdfs</span><span class=p>:</span><span class=o>//</span><span class=n>node1</span><span class=p>:</span><span class=mi>8020</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>eventLogs</span>
+</span></span><span class=line><span class=cl> <span class=n>spark</span><span class=o>.</span><span class=n>eventLog</span><span class=o>.</span><span class=n>compress</span>    <span class=bp>true</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==================在HDFS上创建日志存储目录===============</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.第一台机器（master）启动HDFS</span>
+</span></span><span class=line><span class=cl> <span class=n>start</span><span class=o>-</span><span class=n>dfs</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.创建程序运行日志的存储目录</span>
+</span></span><span class=line><span class=cl> <span class=n>hadoop</span> <span class=n>fs</span> <span class=o>-</span><span class=n>mkdir</span> <span class=o>-</span><span class=n>p</span> <span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>eventLogs</span><span class=o>/</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ===============配置worker节点==============================</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.拷贝文件</span>
+</span></span><span class=line><span class=cl> <span class=n>cp</span> <span class=n>workers</span><span class=o>.</span><span class=n>template</span> <span class=n>workers</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.编辑文件</span>
+</span></span><span class=line><span class=cl> <span class=n>vim</span> <span class=n>workers</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.删掉localhost，添加以下内容</span>
+</span></span><span class=line><span class=cl> <span class=n>node1</span>
+</span></span><span class=line><span class=cl> <span class=n>node2</span>
+</span></span><span class=line><span class=cl> <span class=n>node3</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==================分发安装包到其他子节点=========================</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.切换路径</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.分发安装包到node2节点</span>
+</span></span><span class=line><span class=cl> <span class=n>scp</span> <span class=o>-</span><span class=n>r</span> <span class=n>spark</span><span class=o>-</span><span class=n>standalone</span> <span class=n>node2</span><span class=p>:</span><span class=o>$</span><span class=n>PWD</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.分发安装包到node3节点</span>
+</span></span><span class=line><span class=cl> <span class=n>scp</span> <span class=o>-</span><span class=n>r</span> <span class=n>spark</span><span class=o>-</span><span class=n>standalone</span> <span class=n>node3</span><span class=p>:</span><span class=o>$</span><span class=n>PWD</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==================其他节点建立软连接（快捷方式）==============</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.node2节点和node3节点执行</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.删除原链接</span>
+</span></span><span class=line><span class=cl> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=n>spark</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.构建新链接</span>
+</span></span><span class=line><span class=cl> <span class=n>ln</span> <span class=o>-</span><span class=n>s</span> <span class=n>spark</span><span class=o>-</span><span class=n>standalone</span> <span class=n>spark</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># =================Standalone模式启动==========================</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.切换路径</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.启动主进程</span>
+</span></span><span class=line><span class=cl> <span class=n>sbin</span><span class=o>/</span><span class=n>start</span><span class=o>-</span><span class=n>master</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.查看日志</span>
+</span></span><span class=line><span class=cl> <span class=n>tailf</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>logs</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>root</span><span class=o>-</span><span class=n>org</span><span class=o>.</span><span class=n>apache</span><span class=o>.</span><span class=n>spark</span><span class=o>.</span><span class=n>deploy</span><span class=o>.</span><span class=n>master</span><span class=o>.</span><span class=n>Master</span><span class=o>-</span><span class=mi>1</span><span class=o>-</span><span class=n>node1</span><span class=o>.</span><span class=n>itcast</span><span class=o>.</span><span class=n>cn</span><span class=o>.</span><span class=n>out</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==============启动worker=================================</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.worker后中有个s，不要漏了</span>
+</span></span><span class=line><span class=cl> <span class=n>sbin</span><span class=o>/</span><span class=n>start</span><span class=o>-</span><span class=n>workers</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.校验Worker节点</span>
+</span></span><span class=line><span class=cl> <span class=mi>3</span><span class=err>个节点都执行：</span><span class=n>jps</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.查看日志</span>
+</span></span><span class=line><span class=cl> <span class=n>tailf</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>logs</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>root</span><span class=o>-</span><span class=n>org</span><span class=o>.</span><span class=n>apache</span><span class=o>.</span><span class=n>spark</span><span class=o>.</span><span class=n>deploy</span><span class=o>.</span><span class=n>worker</span><span class=o>.</span><span class=n>Worker</span><span class=o>-</span><span class=mi>1</span><span class=o>-</span><span class=n>node1</span><span class=o>.</span><span class=n>itcast</span><span class=o>.</span><span class=n>cn</span><span class=o>.</span><span class=n>out</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==================启动HistoryServer======================</span>
+</span></span><span class=line><span class=cl> <span class=c1>#1.命令</span>
+</span></span><span class=line><span class=cl> <span class=n>sbin</span><span class=o>/</span><span class=n>start</span><span class=o>-</span><span class=n>history</span><span class=o>-</span><span class=n>server</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#2.校验</span>
+</span></span><span class=line><span class=cl> <span class=n>jps</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1>#3.查看日志</span>
+</span></span><span class=line><span class=cl> <span class=n>tailf</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>logs</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>root</span><span class=o>-</span><span class=n>org</span><span class=o>.</span><span class=n>apache</span><span class=o>.</span><span class=n>spark</span><span class=o>.</span><span class=n>deploy</span><span class=o>.</span><span class=n>history</span><span class=o>.</span><span class=n>HistoryServer</span><span class=o>-</span><span class=mi>1</span><span class=o>-</span><span class=n>node1</span><span class=o>.</span><span class=n>itcast</span><span class=o>.</span><span class=n>cn</span><span class=o>.</span><span class=n>out</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==============停止集群，仅需要在主节点执行=======================</span>
+</span></span><span class=line><span class=cl> <span class=c1># ===========停止master================</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span>
+</span></span><span class=line><span class=cl> <span class=n>sbin</span><span class=o>/</span><span class=n>stop</span><span class=o>-</span><span class=n>master</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==========停止worker=================</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span>
+</span></span><span class=line><span class=cl> <span class=n>sbin</span><span class=o>/</span><span class=n>stop</span><span class=o>-</span><span class=n>workers</span><span class=o>.</span><span class=n>sh</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> <span class=c1># ==========停止historyServer==========</span>
+</span></span><span class=line><span class=cl> <span class=n>cd</span> <span class=o>/</span><span class=k>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span>
+</span></span><span class=line><span class=cl> <span class=n>sbin</span><span class=o>/</span><span class=n>stop</span><span class=o>-</span><span class=n>history</span><span class=o>-</span><span class=n>server</span><span class=o>.</span><span class=n>sh</span>
+</span></span></code></pre></div><table><thead><tr><th><strong>端口</strong></th><th><strong>功能</strong></th><th><strong>说明</strong></th></tr></thead><tbody><tr><td>4040</td><td>某一个应用程序的端口</td><td>应用程序启动就占用，一旦运行完成，端口释放</td></tr><tr><td>7077</td><td>提交程序给Master的端口</td><td>只要Master活着就会长期占用</td></tr><tr><td>8080</td><td>Master WebUI页面端口</td><td>只要Master活着就会长期占用</td></tr><tr><td>18080</td><td>HistoryServer Web界面端口</td><td>只要HistoryServer活着就会占用</td></tr></tbody></table><h3 id=44-入门案例><a class=header-anchor href=#44-%e5%85%a5%e9%97%a8%e6%a1%88%e4%be%8b></a>4.4 入门案例</h3><p>圆周率测试</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># 提交程序脚本：</span>
+</span></span><span class=line><span class=cl><span class=nb>bin</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>submit</span> 
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>master</span><span class=err>：</span><span class=n>指定运行模式</span><span class=err>，</span><span class=n>本地模式</span><span class=err>：</span><span class=n>local</span><span class=err>，</span> <span class=n>Standalone集群</span><span class=err>：</span><span class=n>spark</span><span class=p>:</span><span class=o>//</span><span class=n>主节点地址</span><span class=p>:</span><span class=mi>7077</span> 
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>bin</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>submit</span> \
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>master</span> <span class=n>spark</span><span class=p>:</span><span class=o>//</span><span class=n>node1</span><span class=p>:</span><span class=mi>7077</span> \
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>examples</span><span class=o>/</span><span class=n>src</span><span class=o>/</span><span class=n>main</span><span class=o>/</span><span class=n>python</span><span class=o>/</span><span class=n>pi</span><span class=o>.</span><span class=n>py</span> \ <span class=mi>200</span> <span class=n>或者</span> <span class=o>/</span><span class=n>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>bin</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>submit</span> \
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>master</span> <span class=n>spark</span><span class=p>:</span><span class=o>//</span><span class=n>node1</span><span class=o>.</span><span class=n>itcast</span><span class=o>.</span><span class=n>cn</span><span class=p>:</span><span class=mi>7077</span> \
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>conf</span> <span class=s2>&#34;spark.pyspark.driver.python=/root/anaconda3/bin/python3&#34;</span> \
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>conf</span> <span class=s2>&#34;spark.pyspark.python=/root/anaconda3/bin/python3&#34;</span> \
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>examples</span><span class=o>/</span><span class=n>src</span><span class=o>/</span><span class=n>main</span><span class=o>/</span><span class=n>python</span><span class=o>/</span><span class=n>pi</span><span class=o>.</span><span class=n>py</span> \ <span class=mi>200</span>
+</span></span></code></pre></div><h2 id=5-yarn模式><a class=header-anchor href=#5-yarn%e6%a8%a1%e5%bc%8f></a>5. Yarn模式</h2><p>为什么要将Spark的程序运行在Yarn上，不运行在自带的Standalone集群上？
+工作中的计算集群大多数情况下只有1套集群，如果Hadoop生态的程序，例如MR、Hive、Sqoop、Oozie等使用Yarn来计算，
+而Spark的程序单独用Standalone集群来计算，就导致了一套硬件资源被两套资源管理平台所管理，使用时会导致资源竞争冲突等问题，
+不能充分的发挥硬件资源的性能且管理麻烦。
+反过来，既然Spark任务提交在Yarn上运行，那还要Standalone集群干嘛呢？
+这就是有没有和用不用的区别。
+如果没有，则Spark就高度依赖Yarn。形成了强绑定关系一样，很显然，这样风险太大了。</p><h3 id=51-什么叫yarn模式><a class=header-anchor href=#51-%e4%bb%80%e4%b9%88%e5%8f%abyarn%e6%a8%a1%e5%bc%8f></a>5.1 什么叫Yarn模式</h3><p>把Spark程序提交到Yarn上来运行，使用Yarn的分布式资源管理给Spark程序分配资源。
+注意：
+Spark一旦提交给Yarn来运行，就和Standalone模式没有任何关系了。</p><h3 id=52-yarn模式安装部署><a class=header-anchor href=#52-yarn%e6%a8%a1%e5%bc%8f%e5%ae%89%e8%a3%85%e9%83%a8%e7%bd%b2></a>5.2 Yarn模式安装部署</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 先关闭原来的Standalone集群, 确保没有开启其他模式，确保spark和ananconda安装包已经上传到了Linux服务器上</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ===========安装spark环境=================</span>
+</span></span><span class=line><span class=cl><span class=c1>#1.切换路径</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/software/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.解压Spark安装包</span>
+</span></span><span class=line><span class=cl>tar -xf spark-3.1.2-bin-hadoop3.2.tgz -C /export/server
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.切换路径</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/server
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#4.重命名</span>
+</span></span><span class=line><span class=cl>mv spark-3.1.2-bin-hadoop3.2 spark-yarn
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#5.删除原软连接</span>
+</span></span><span class=line><span class=cl>rm -rf /export/server/spark
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#6.重构新软连接</span>
+</span></span><span class=line><span class=cl>ln -s spark-yarn /export/server/spark
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ==============配置spark环境==============</span>
+</span></span><span class=line><span class=cl><span class=c1>#1.切换目录</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/server/spark-yarn/conf
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.复制模板</span>
+</span></span><span class=line><span class=cl>cp spark-env.sh.template spark-env.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.编辑spark-env.sh文件</span>
+</span></span><span class=line><span class=cl>vim spark-env.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#4.22行（空行）设置JAVA安装目录、HADOOP和YARN配置文件目录</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>JAVA_HOME</span><span class=o>=</span>/export/server/jdk1.8.0_241/
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>HADOOP_CONF_DIR</span><span class=o>=</span>/export/server/hadoop/etc/hadoop
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>YARN_CONF_DIR</span><span class=o>=</span>/export/server/hadoop/etc/hadoop
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SPARK_DAEMON_MEMORY</span><span class=o>=</span>1g
+</span></span><span class=line><span class=cl><span class=nv>SPARK_HISTORY_OPTS</span><span class=o>=</span><span class=s2>&#34;-Dspark.history.fs.logDirectory=hdfs://node1:8020/spark/eventLogs/ -Dspark.history.fs.cleaner.enabled=true&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># =============配置spark属性=================</span>
+</span></span><span class=line><span class=cl><span class=c1>#1.切换路径</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/server/spark-yarn/conf
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.复制模板</span>
+</span></span><span class=line><span class=cl>cp spark-defaults.conf.template spark-defaults.conf
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.编辑文件</span>
+</span></span><span class=line><span class=cl>vim spark-defaults.conf
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#4.在文件最后添加内容</span>
+</span></span><span class=line><span class=cl>spark.eventLog.enabled            <span class=nb>true</span>
+</span></span><span class=line><span class=cl>spark.eventLog.dir                hdfs://node1:8020/spark/eventLogs
+</span></span><span class=line><span class=cl>spark.eventLog.compress           <span class=nb>true</span>
+</span></span><span class=line><span class=cl>spark.yarn.historyServer.address  node1:18080
+</span></span><span class=line><span class=cl>spark.yarn.jars    hdfs://node1:8020/spark/jars/*
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ============上传jar包到HDFS================</span>
+</span></span><span class=line><span class=cl><span class=c1>#因为YARN中运行Spark，需要用到Spark的一些类和方法</span>
+</span></span><span class=line><span class=cl><span class=c1>#如果不上传到HDFS，每次运行YARN都要上传一次，比较慢</span>
+</span></span><span class=line><span class=cl><span class=c1>#所以自己手动上传一次，以后每次YARN直接读取即可</span>
+</span></span><span class=line><span class=cl>hadoop fs -mkdir -p /spark/jars/
+</span></span><span class=line><span class=cl>hadoop fs -put /export/server/spark-yarn/jars/* /spark/jars/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ==========修改yarn-site配置文件=============</span>
+</span></span><span class=line><span class=cl>vim /export/server/hadoop/etc/hadoop/yarn-site.xml
+</span></span><span class=line><span class=cl><span class=c1>## 添加如下内容</span>
+</span></span><span class=line><span class=cl>&lt;!-- 开启日志聚合功能 --&gt;
+</span></span><span class=line><span class=cl>&lt;property&gt;
+</span></span><span class=line><span class=cl>    &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;
+</span></span><span class=line><span class=cl>    &lt;value&gt;true&lt;/value&gt;
+</span></span><span class=line><span class=cl>&lt;/property&gt;
+</span></span><span class=line><span class=cl>&lt;!-- 设置聚合日志在hdfs上的保存时间 --&gt;
+</span></span><span class=line><span class=cl>&lt;property&gt;
+</span></span><span class=line><span class=cl>    &lt;name&gt;yarn.log-aggregation.retain-seconds&lt;/name&gt;
+</span></span><span class=line><span class=cl>    &lt;value&gt;604800&lt;/value&gt;
+</span></span><span class=line><span class=cl>&lt;/property&gt;
+</span></span><span class=line><span class=cl>&lt;!-- 设置yarn历史服务器地址 --&gt;
+</span></span><span class=line><span class=cl>&lt;property&gt;
+</span></span><span class=line><span class=cl>    &lt;name&gt;yarn.log.server.url&lt;/name&gt;
+</span></span><span class=line><span class=cl>    &lt;value&gt;http://node1.itcast.cn:19888/jobhistory/logs&lt;/value&gt;
+</span></span><span class=line><span class=cl>&lt;/property&gt;
+</span></span><span class=line><span class=cl>&lt;!-- 关闭yarn内存检查 --&gt;
+</span></span><span class=line><span class=cl>&lt;property&gt;
+</span></span><span class=line><span class=cl>    &lt;name&gt;yarn.nodemanager.pmem-check-enabled&lt;/name&gt;
+</span></span><span class=line><span class=cl>    &lt;value&gt;false&lt;/value&gt;
+</span></span><span class=line><span class=cl>&lt;/property&gt;
+</span></span><span class=line><span class=cl>&lt;property&gt;
+</span></span><span class=line><span class=cl>    &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;
+</span></span><span class=line><span class=cl>    &lt;value&gt;false&lt;/value&gt;
+</span></span><span class=line><span class=cl>&lt;/property&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ===========分发yarn-site===================</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/server/hadoop/etc/hadoop
+</span></span><span class=line><span class=cl>scp -r yarn-site.xml root@node2:<span class=nv>$PWD</span>
+</span></span><span class=line><span class=cl>scp -r yarn-site.xml root@node3:<span class=nv>$PWD</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># =============分发安装包到其他节点==============</span>
+</span></span><span class=line><span class=cl><span class=c1>#1.切换路径</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/server/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.分发到node2节点</span>
+</span></span><span class=line><span class=cl><span class=c1>#scp -r spark-yarn node2:$PWD</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.分发到node3节点</span>
+</span></span><span class=line><span class=cl><span class=c1># scp -r spark-yarn node3:$PWD</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ==========其他节点修改软连接===================</span>
+</span></span><span class=line><span class=cl><span class=c1>#1.node2节点和node3节点执行</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /export/server
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.删除原链接</span>
+</span></span><span class=line><span class=cl>rm -rf spark
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.构建新链接</span>
+</span></span><span class=line><span class=cl>ln -s spark-yarn spark
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># =============启动集群=============</span>
+</span></span><span class=line><span class=cl><span class=c1>#1.启动HDFS和Yarn，由于Standalone模式下已经启动了HDFS，因此这里就启动Yarn</span>
+</span></span><span class=line><span class=cl>start-yarn.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.启动MR的JobHistoryServer：19888</span>
+</span></span><span class=line><span class=cl>mapred --daemon start historyserver
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.校验MR的历史服务，JobHistoryServer</span>
+</span></span><span class=line><span class=cl>jps
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#4.如果没有安装Standalone模式，则需要执行(已经安装了Standalone模式集群的跳过)</span>
+</span></span><span class=line><span class=cl>hadoop fs -mkdir -p /spark/eventLogs/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#5.启动Spark的HistoryServer:18080</span>
+</span></span><span class=line><span class=cl>/export/server/spark/sbin/start-history-server.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#6.访问</span>
+</span></span><span class=line><span class=cl>node1:18080
+</span></span></code></pre></div><h3 id=53-入门案例><a class=header-anchor href=#53-%e5%85%a5%e9%97%a8%e6%a1%88%e4%be%8b></a>5.3 入门案例</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#1.构建Spark环境</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>os</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pyspark</span> <span class=kn>import</span> <span class=n>SparkConf</span><span class=p>,</span> <span class=n>SparkContext</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#设置环境变量HADOOP_CONF_DIR or YARN_CONF_DIR</span>
+</span></span><span class=line><span class=cl><span class=c1>#语法：os.environ[&#39;key&#39;] = &#39;value&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>os</span><span class=o>.</span><span class=n>environ</span><span class=p>[</span><span class=s1>&#39;HADOOP_CONF_DIR&#39;</span><span class=p>]</span> <span class=o>=</span> <span class=s1>&#39;/export/server/hadoop/etc/hadoop&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>conf</span> <span class=o>=</span> <span class=n>SparkConf</span><span class=p>()</span><span class=o>.</span><span class=n>setAppName</span><span class=p>(</span><span class=s2>&#34;WordCountYarn&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>setMaster</span><span class=p>(</span><span class=s2>&#34;yarn&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>sc</span> <span class=o>=</span> <span class=n>SparkContext</span><span class=p>(</span><span class=n>conf</span><span class=o>=</span><span class=n>conf</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#2.数据输入</span>
+</span></span><span class=line><span class=cl><span class=n>input_rdd</span> <span class=o>=</span> <span class=n>sc</span><span class=o>.</span><span class=n>textFile</span><span class=p>(</span><span class=s2>&#34;hdfs://node1:8020/spark/wordcount/input/word.txt&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#3.数据处理</span>
+</span></span><span class=line><span class=cl><span class=n>result_rdd</span> <span class=o>=</span> <span class=n>input_rdd</span><span class=o>.</span><span class=n>flatMap</span><span class=p>(</span><span class=k>lambda</span> <span class=n>line</span> <span class=p>:</span> <span class=n>line</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34; &#34;</span><span class=p>))</span>\
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>map</span><span class=p>(</span><span class=k>lambda</span> <span class=n>word</span> <span class=p>:</span> <span class=p>(</span><span class=n>word</span><span class=p>,</span><span class=mi>1</span><span class=p>))</span>\
+</span></span><span class=line><span class=cl>    <span class=o>.</span><span class=n>reduceByKey</span><span class=p>(</span><span class=k>lambda</span> <span class=n>x</span><span class=p>,</span><span class=n>y</span> <span class=p>:</span> <span class=n>x</span> <span class=o>+</span> <span class=n>y</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#4.数据输出</span>
+</span></span><span class=line><span class=cl><span class=c1>#结果在集群中，无法查看</span>
+</span></span><span class=line><span class=cl><span class=n>result_rdd</span><span class=o>.</span><span class=n>foreach</span><span class=p>(</span><span class=k>lambda</span> <span class=n>x</span><span class=p>:</span><span class=nb>print</span><span class=p>(</span><span class=n>x</span><span class=p>))</span>
+</span></span><span class=line><span class=cl><span class=c1>#可以查看结果</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>result_rdd</span><span class=o>.</span><span class=n>collect</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=c1>#结果保存在HDFS上</span>
+</span></span><span class=line><span class=cl><span class=n>result_rdd</span><span class=o>.</span><span class=n>saveAsTextFile</span><span class=p>(</span><span class=s2>&#34;hdfs://node1:8020/spark/wordcount/output4&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#5.停止Spark任务</span>
+</span></span><span class=line><span class=cl><span class=n>sc</span><span class=o>.</span><span class=n>stop</span><span class=p>()</span>
+</span></span></code></pre></div><h2 id=6-任务提交><a class=header-anchor href=#6-%e4%bb%bb%e5%8a%a1%e6%8f%90%e4%ba%a4></a>6. 任务提交</h2><h3 id=61-mrstandaloneyarn对比><a class=header-anchor href=#61-mrstandaloneyarn%e5%af%b9%e6%af%94></a>6.1 MR+Standalone+Yarn对比</h3><table><thead><tr><th><strong>MR On Yarn</strong></th><th><strong>Spark On Standalone</strong></th><th><strong>Spark On Yarn</strong></th></tr></thead><tbody><tr><td>ResourceManager</td><td>Master</td><td>ResourceManager</td></tr><tr><td>NodeManager</td><td>Worker</td><td>NodeManager</td></tr><tr><td>Application Master</td><td>Driver</td><td>Driver和AppMaster</td></tr><tr><td>计算进程：MapTask、ReduceTask</td><td>Executor</td><td>Container</td></tr></tbody></table><p>只要你用YARN集群：就一定会有AppMaster
+只要你是Spark程序：就一定会有Driver
+问题：AppMaster和Driver的功能是相近的，如果讲任务提交到Yarn上，他们之间到底如何分配呢？</p><h3 id=62-deploy-mode><a class=header-anchor href=#62-deploy-mode></a>6.2 deploy-mode</h3><p>Spark Application提交运行时部署模式Deploy Mode，表示的是Driver Program运行的地方。
+要么是提交应用的客户端节点：client，默认就是client，也叫客户端模式。
+要么是集群中从节点（Standalone：Worker，YARN：NodeManager）：cluster，也叫集群模式。
+<strong>问题：这两种模式有什么区别吗？</strong>
+Cluster和Client模式都是在Yarn平台上运行的，最本质的区别是：<strong>Driver程序运行在哪里</strong>。
+<strong>使用场景</strong>：</p><ul><li><strong>Standalone集群下的deploy-mode</strong><ul><li><strong>client模式功能</strong>：整体负责实现资源申请、Task的解析、调度和监控<strong>结论</strong>：Driver在客户端机器上启动。</li><li><img src=http://img.charlee.top/blog202311251320860.png alt></li><li><strong>cluster模式</strong><img src=http://img.charlee.top/blog202311251321389.png alt><strong>功能</strong>：整体负责实现资源申请、Task的解析、调度和监控<strong>结论</strong>：Driver在集群内的某一个节点启动。</li></ul></li><li><strong>Yarn集群下的deploy-mode</strong><ul><li><p><strong>client模式</strong></p><p><img src=http://img.charlee.top/blog202311251321023.png alt></p></li><li><p><strong>功能</strong>： AppMaster运行在NodeManager上：负责申请资源，启动Executors、反馈结果 Driver运行在客户端机器上，运行在客户端进程内部：负责解析、调度和监控Task</p></li><li><p><strong>cluster模式&mdash;&mdash;</strong></p><p><img src=http://img.charlee.top/blog202311251321799.png alt></p></li></ul></li><li>AppMaster和Driver合二为一，都运行在集群内部的某个节点上，可以理解为AppMaster就是Driver（包含Driver）。<strong>功能</strong>：整体负责实现资源申请、Task的解析、调度和监控<strong>结论</strong>：Driver就是AppMaster，在集群内的某一个节点启动。</li></ul><h3 id=63-spark-submit><a class=header-anchor href=#63-spark-submit></a>6.3 Spark-submit</h3><p><strong>常用参数</strong></p><table><thead><tr><th><strong>参数</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td>&ndash;master</td><td>spark://host:port 、mesos://host:port、k8s://https://host:port、local[N]</td></tr><tr><td>&ndash;deploy-mode</td><td>提交方式：client、cluster；client在本地客户端启动driver、cluster在集群内部某一节点上启动driver</td></tr><tr><td>&ndash;class</td><td>应用程序的主类，运行某个类，用Python写不用管，用于Java/Scala</td></tr><tr><td>&ndash;name</td><td>应用程序的名称，等同于代码中setAppName</td></tr><tr><td>&ndash;jars</td><td>指定额外的第三方依赖包，例如读写MySQL，需要MySQL的驱动包，用，分割</td></tr><tr><td>&ndash;files</td><td>需要放到应用工作目录的文件列表，以，分隔。需要分发到各节点的数据文件</td></tr><tr><td>&ndash;conf</td><td>指定一些其他配置&ndash;conf key=value， 等同于代码中set方法，分区数</td></tr><tr><td>&ndash;queue</td><td>队列的配置，默认就是default，公司中实际项目运行时，一般不会是default队列，队列名随意，建议使用项目名来命名。</td></tr><tr><td>&ndash;supervise</td><td>用于保证Driver进程安全，故障以后会自动重启，只能用于Standalone模式的cluster模式</td></tr><tr><td>&ndash;properties-file</td><td>加载外部包含键值对的属性文件；如果不指定，就默认读取spark安装目录下的conf/spark-defaults.conf文件中的配置</td></tr><tr><td>&ndash;driver-memory</td><td>用于指定Driver进程运行时能够使用的内存大小，默认1g</td></tr><tr><td>&ndash;driver-cores</td><td>用于指定Driver进程运行时能够使用CPU的核数，默认1核</td></tr><tr><td>&ndash;executor-memory</td><td>每个executor进程所使用的内存，默认1G</td></tr><tr><td>&ndash;executor-cores</td><td>每个executor进程所使用的CPU核心数，默认1</td></tr><tr><td>&ndash;num-executors</td><td>executor进程数量，默认为2；仅在Yarn模式下使用</td></tr></tbody></table><p><strong>实例</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>bin</span><span class=o>/</span><span class=n>spark</span><span class=o>-</span><span class=n>submit</span> <span class=o>&lt;</span><span class=n>options</span><span class=o>&gt;</span> <span class=o>&lt;</span><span class=n>app</span> <span class=n>jar</span><span class=o>&gt;</span> <span class=p>[</span><span class=n>app</span> <span class=n>options</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>spark</span><span class=o>-</span><span class=n>submit</span><span class=err>：</span><span class=n>提交任务到集群中运行</span>
+</span></span><span class=line><span class=cl><span class=c1>#5.1 master参数</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>master</span> <span class=n>spark</span><span class=p>:</span><span class=o>//</span><span class=n>node1</span><span class=p>:</span><span class=mi>7077</span> <span class=err>：</span><span class=n>指定master地址</span><span class=err>，</span><span class=n>这里是standalone模式</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>deploy</span><span class=o>-</span><span class=n>mode</span> <span class=n>client</span> <span class=err>：</span><span class=n>指定部署模式</span><span class=err>，</span><span class=n>默认就是client</span><span class=err>，</span><span class=n>不支持cluster</span>
+</span></span><span class=line><span class=cl><span class=c1>#5.2 driver参数</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>driver</span><span class=o>-</span><span class=n>memory</span> <span class=mi>512</span><span class=n>m</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>driver</span><span class=o>-</span><span class=n>cores</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl><span class=c1>#5.3 executor参数</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>executor</span><span class=o>-</span><span class=n>cores</span> <span class=mi>1</span><span class=err>：</span><span class=n>每1个executor所用的core</span><span class=err>（</span><span class=n>核数</span><span class=err>）</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>executor</span><span class=o>-</span><span class=n>memory</span> <span class=mi>512</span><span class=n>m</span><span class=err>：</span><span class=n>每1个executor的内存大小</span>
+</span></span><span class=line><span class=cl><span class=o>--</span><span class=n>total</span><span class=o>-</span><span class=n>num</span><span class=o>-</span><span class=n>executors</span> <span class=mi>4</span><span class=err>：</span><span class=n>总的executor数量</span>
+</span></span><span class=line><span class=cl><span class=c1>#5.4 其他参数</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>export</span><span class=o>/</span><span class=n>server</span><span class=o>/</span><span class=n>spark</span><span class=o>/</span><span class=n>examples</span><span class=o>/</span><span class=n>src</span><span class=o>/</span><span class=n>main</span><span class=o>/</span><span class=n>python</span><span class=o>/</span><span class=n>pi</span><span class=o>.</span><span class=n>py</span> <span class=err>：</span><span class=n>提交运行的文件</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl> 
+</span></span></code></pre></div></div><footer class=article-footer><ul class=article-tag-list itemprop=keywords><li class=article-tag-list-item data-aos=zoom-in><a class=article-tag-list-link href=/tags/spark rel=tag>SPARK</a></li></ul></footer></div><nav id=article-nav aria-label="Article navigation" data-aos=fade-up><div class="article-nav-link-wrap left"><img data-src=https://d-sketon.top/img/_backwebp/bg1.webp data-sizes=auto alt=SparkSQL class=lazyload><a href=/post/sparksql-7lnsx.html aria-label=前一篇:SparkSQL title=前一篇:SparkSQL></a><div class=article-nav-caption>前一篇</div><h3 class=article-nav-title>SparkSQL</h3></div><div class="article-nav-link-wrap right"><img data-src=https://d-sketon.top/img/_backwebp/bg1.webp data-sizes=auto alt=nginx域名配置记录 class=lazyload><a href=/post/nginx-domain-name-configuration-record-nshsr.html aria-label=后一篇:nginx域名配置记录 title=后一篇:nginx域名配置记录></a><div class=article-nav-caption>后一篇</div><h3 class=article-nav-title>nginx域名配置记录</h3></div></nav></article></section></div><footer id=footer aria-label="Site footer"><div style=width:100%;overflow:hidden><div class=footer-line></div></div><div id=footer-info><div><span class=icon-copyright></span>2025<span class="footer-info-sep rotate"></span>
+Lumos</div><div>基于&nbsp;<a href=https://gohugo.io/ target=_blank rel="noopener nofollow noreferrer">Hugo</a>&nbsp; Theme.<a href=https://github.com/D-Sketon/hugo-theme-reimu target=_blank rel="noopener nofollow noreferrer">Reimu</a></div><div><span class=icon-brush>&nbsp;173.1k</span>
+&nbsp;|&nbsp;
+<span class=icon-coffee>&nbsp;05:53</span></div><div class=footer-beian><a target=_blank rel="noopener nofollow noreferrer" href=https://beian.miit.gov.cn>鄂ICP备2022015296号-2</a></div></div></footer><div class=sidebar-top><div class="sidebar-top-taichi rotate"></div><div class=arrow-up></div></div><div id=mask class=hide></div></div><nav id=mobile-nav aria-label="Mobile navigation"><div class=sidebar-wrap><div class=sidebar-toc-sidebar><h3 class=toc-title>文章目录</h3><div class="sidebar-toc-wrapper toc-div-class"><nav id=TableOfContents><ul><li><a href=#1-大数据开发的总体架构>1. 大数据开发的总体架构</a><ul><li><a href=#数据来源层>数据来源层</a></li><li><a href=#数据传输层数据采集>数据传输层（数据采集）</a></li><li><a href=#数据存储层>数据存储层</a></li><li><a href=#资源管理层>资源管理层</a></li><li><a href=#数据计算层>数据计算层</a></li><li><a href=#任务调度层>任务调度层</a></li><li><a href=#业务模型层>业务模型层</a></li></ul></li><li><a href=#2-spark的概念>2. Spark的概念</a><ul><li><a href=#四大特点>四大特点</a></li><li><a href=#主要组件>主要组件</a></li><li><a href=#专业术语>专业术语</a></li></ul></li><li><a href=#3-spark任务执行流程>3. Spark任务执行流程</a><ul><li><a href=#简单版><img src="assets/1648111504430.png#id=TqdX5&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt>简单版</a></li><li><a href=#复杂版>复杂版</a></li><li><a href=#从代码的角度看spark执行流程>从代码的角度看Spark执行流程</a></li></ul></li></ul><ul><li><a href=#1-spark支持多种运行模式>1. Spark支持多种运行模式</a></li><li><a href=#2-yarn集群架构>2. YARN集群架构</a><ul><li><a href=#21-yarn基本架构>2.1 Yarn基本架构</a></li><li><a href=#22-yarn的执行流程>2.2 YARN的执行流程：</a></li></ul></li><li><a href=#3-local模式>3. Local模式</a><ul><li><a href=#31-安装部署>3.1 安装部署</a></li><li><a href=#32-入门案例>3.2 入门案例</a></li></ul></li><li><a href=#4-standalone模式>4. Standalone模式</a><ul><li><a href=#41-什么是standalone>4.1 什么是Standalone?</a></li><li><a href=#42-spark执行流程>4.2 Spark执行流程</a></li><li><a href=#43-安装部署>4.3 安装部署</a></li><li><a href=#44-入门案例>4.4 入门案例</a></li></ul></li><li><a href=#5-yarn模式>5. Yarn模式</a><ul><li><a href=#51-什么叫yarn模式>5.1 什么叫Yarn模式</a></li><li><a href=#52-yarn模式安装部署>5.2 Yarn模式安装部署</a></li><li><a href=#53-入门案例>5.3 入门案例</a></li></ul></li><li><a href=#6-任务提交>6. 任务提交</a><ul><li><a href=#61-mrstandaloneyarn对比>6.1 MR+Standalone+Yarn对比</a></li><li><a href=#62-deploy-mode>6.2 deploy-mode</a></li><li><a href=#63-spark-submit>6.3 Spark-submit</a></li></ul></li></ul></nav></div></div><div class="sidebar-common-sidebar hidden"><div class=sidebar-author><img data-src=/avatar/avatar.webp data-sizes=auto alt=Lumos class=lazyload><div class=sidebar-author-name>Lumos</div><div class=sidebar-description></div></div><div class=sidebar-state><div class=sidebar-state-article><div>文章</div><div class=sidebar-state-number>23</div></div><a class=sidebar-state-category href=/categories/ aria-label=sidebar-state-category-link><div>分类</div><div class=sidebar-state-number>5</div></a><a class=sidebar-state-tag href=/tags/ aria-label=sidebar-state-tag-link><div>标签</div><div class=sidebar-state-number>8</div></a></div><div class=sidebar-social></div><div class=sidebar-menu><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/ aria-label=首页></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>首页</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/archives aria-label=归档></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>归档</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/about aria-label=关于></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>关于</div></div><div class=sidebar-menu-link-wrap><a class=sidebar-menu-link-dummy href=/friend aria-label=友链></a><div class='sidebar-menu-icon icon rotate'>&#xe62b;</div><div class=sidebar-menu-link>友链</div></div></div></div></div><div class=sidebar-btn-wrapper><div class="sidebar-toc-btn current"></div><div class=sidebar-common-btn></div></div></nav></div><div class=site-search><div class="reimu-popup popup"><div class=reimu-search><div class=reimu-search-input-icon></div><div id=reimu-search-input></div><div class=popup-btn-close></div></div><div class=reimu-results><div id=reimu-stats></div><div id=reimu-hits></div><div id=reimu-pagination class=reimu-pagination></div></div><img class=reimu-bg src=/images/reimu.png></div></div><script src=https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js integrity=sha384-3gT/vsepWkfz/ff7PpWNUeMzeWoH3cDhm/A8jM7ouoAK0/fP/9bcHHR5kHq2nf+e crossorigin=anonymous></script><script src=https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js integrity=sha384-J08i8An/QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q crossorigin=anonymous></script><script src=https://npm.webcache.cn/material-theme@1.0.0/dist/material-theme.umd.js integrity=sha384-vLev0II0HKFaxkcm+/7kX5IGwVFBASkGchU311wmU/veIj2bB0UcBkQbW6yw2asK crossorigin=anonymous></script><script src=/js/main.js integrity crossorigin=anonymous></script><script src=/js/aos.js integrity crossorigin=anonymous></script><script>var aosInit=()=>{AOS.init({duration:1e3,easing:"ease",once:!0,offset:50})};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",aosInit):aosInit()</script><script src=/js/pjax_main.js integrity crossorigin=anonymous data-pjax></script><script>var ALGOLIA_CONFIG={logo:"/images/algolia_logo.svg",algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:parseInt("10")},labels:{input_placeholder:"搜索.....",hits_empty:"未发现与 「${query}」相关内容",hits_stats:"找到${hits}条结果（用时 ${time} ms）"}}}</script><script src=https://npm.webcache.cn/algoliasearch@4.17.1/dist/algoliasearch-lite.umd.js deferintegrity=sha384-xvLS0jfKuoREs7pqkRI/OI8GcqohO5S+jQz7ZBtQXnsXmD+9jDOOY4cL6dCPzlrk crossorigin=anonymous></script><script src=https://npm.webcache.cn/@reimujs/instantsearch.js@4.57.0-beta.1/dist/instantsearch.production.min.js deferintegrity=sha384-aagKMe8nkqaP2DYQc8kkYOL5l+M5Q2WH/Uhr4teOh0Ybp0RZj0kUSDm45qPikMjK crossorigin=anonymous></script><script src=/js/algolia_search.js integrity crossorigin=anonymous></script><script src=https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js integrity=sha384-8LyaidD9GPxQQgLJO/WRw/O2h3BoNq/ApI/ecpvM6RsrCz2qP2ppBXUKihP4V/2d crossorigin=anonymous></script><script>if((!!1||!window.matchMedia("(max-width: 768px)").matches)&&window.firework){const e=JSON.parse('{"excludeelements":["a","button"],"particles":[{"colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"duration":[1200,1800],"easing":"easeOutExpo","move":["emit"],"number":20,"shape":"circle","shapeOptions":{"alpha":[0.3,0.5],"radius":[16,32]}},{"colors":["var(--red-0)"],"duration":[1200,1800],"easing":"easeOutExpo","move":["diffuse"],"number":1,"shape":"circle","shapeOptions":{"alpha":[0.2,0.5],"lineWidth":6,"radius":20}}]}');e.excludeElements=e.excludeelements,delete e.excludeelements,window.firework(e)}</script><div id=lazy-script><div><script data-pjax>window.REIMU_POST={author:"Lumos",title:"Spark概述",url:"https://lumos-nova.github.io/post/spark-overview-z2gkjqr.html",description:" Spark概述 Spark概述及主要组件 1. 大数据开发的总体架构 数据来源层 1、MySQL等结构化数据库 2、日志、json文件、xml文件等半结构化数据 3、视频、语音等非结构化数据 - 需要使用DataX、kettle、sqoop、flume、Kafka等数据传输工具将数据传入到数据仓库（HDFS）中 数据传输层（数据采集） 通过各种数据传输工具，将不同源的数据统一导入到HDFS中 Sqoop：Apache下免费开源的采集框架。数据源是关系型数据库。 DataX：阿里巴巴提供的开源免费的数据采集框架。用于离线采集。官网 …",cover:"https://lumos-nova.github.io/images/banner.png"}</script><script src=/js/insert_highlight.js integrity crossorigin=anonymous data-pjax></script><script src=/js/tabs.js integrity crossorigin=anonymous data-pjax></script><script type=module data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
+          if (_$$(`${gallery} ${children}`).length > 0) {
+            new PhotoSwipeLightbox({
+              gallery,
+              children,pswpModule: () => safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8\u002boTJ7m3DfYEWX1fu1scuS4\u002bs")}).init();
+          }
+        }
+        const pswp = () => {
+          initPswp('.article-entry', 'a.article-gallery-item');
+          initPswp('.article-gallery', 'a.article-gallery-item');
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script></div></div><script>"serviceWorker"in navigator&&navigator.serviceWorker.getRegistrations().then(e=>{for(let t of e)t.unregister()})</script><script>const reimuCopyright=String.raw`
+   ______     ______     __     __    __     __  __    
+  /\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+  \ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+   \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+    \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                    
+  `;console.log(String.raw`%c ${reimuCopyright}`,"color: #ff5252;"),console.log("%c Theme.Reimu %c https://github.com/D-Sketon/hugo-theme-reimu ","color: white; background: #ff5252; padding:5px 0;","padding:4px;border:1px solid #ff5252;")</script><script src=https://npm.webcache.cn/pangu@4.0.7/dist/browser/pangu.min.js integrity=sha384-HeUHqi0nVsPUm/E0ss7OfnIV/yD96JWB8ehZvUuoVax9DpNHL17jj9pdfXHzqDxm crossorigin=anonymous></script><script data-pjax>document.readyState==="loading"?document.addEventListener("DOMContentLoaded",()=>{pangu?.spacingPage()}):pangu?.spacingPage()</script></body></html>

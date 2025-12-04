@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AI on 霁川</title><link>https://lumos-nova.github.io/categories/ai/</link><description>Recent content from 霁川</description><generator>Hugo</generator><language>zh-cn</language><managingEditor>charlie552@126.com (Lumos)</managingEditor><webMaster>charlie552@126.com (Lumos)</webMaster><copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright><lastBuildDate>Fri, 05 Dec 2025 02:54:53 +0800</lastBuildDate><atom:link href="https://lumos-nova.github.io/categories/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>机器学习读书笔记--集成学习</title><link>https://lumos-nova.github.io/post/study-notes-10-integrated-learning-zcuthr.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-10-integrated-learning-zcuthr.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--集成学习</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记10集成学习">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b010%e9%9b%86%e6%88%90%e5%ad%a6%e4%b9%a0"></a>
+学习笔记(10)&ndash;集成学习
+</h1><blockquote>
+<p>上篇主要介绍了鼎鼎大名的EM算法，从算法思想到数学公式推导（边际似然引入隐变量，Jensen不等式简化求导），EM算法实际上可以理解为一种坐标下降法，首先固定一个变量，接着求另外变量的最优解，通过其优美的“两步走”策略能较好地估计隐变量的值。本篇将继续讨论下一类经典算法&ndash;集成学习。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--EM算法</title><link>https://lumos-nova.github.io/post/study-notes-9-em-algorithm-2f9h2r.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-9-em-algorithm-2f9h2r.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--EM算法</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记9em算法">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b09em%e7%ae%97%e6%b3%95"></a>
+学习笔记(9)&ndash;EM算法
+</h1><blockquote>
+<p>上篇主要介绍了贝叶斯分类器，从贝叶斯公式到贝叶斯决策论，再到通过极大似然法估计类条件概率，贝叶斯分类器的训练就是参数估计的过程。朴素贝叶斯则是“属性条件独立性假设”下的特例，它避免了假设属性联合分布过于经验性和训练集不足引起参数估计较大偏差两个大问题，最后介绍的拉普拉斯修正将概率值进行平滑处理。本篇将介绍另一个当选为数据挖掘十大算法之一的<strong>EM算法</strong>。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--贝叶斯分类器</title><link>https://lumos-nova.github.io/post/study-notes-8-bayesian-classifier-rp9hh.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-8-bayesian-classifier-rp9hh.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--贝叶斯分类器</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记8贝叶斯分类器">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b08%e8%b4%9d%e5%8f%b6%e6%96%af%e5%88%86%e7%b1%bb%e5%99%a8"></a>
+学习笔记(8)&ndash;贝叶斯分类器
+</h1><blockquote>
+<p>上篇主要介绍和讨论了支持向量机。从最初的分类函数，通过最大化分类间隔，max(1/||w||)，min(1/2||w||^2)，凸二次规划，朗格朗日函数，对偶问题，一直到最后的SMO算法求解，都为寻找一个最优解。接着引入核函数将低维空间映射到高维特征空间，解决了非线性可分的情形。最后介绍了软间隔支持向量机，解决了outlier挤歪超平面的问题。本篇将讨论一个经典的统计学习算法&ndash;<strong>贝叶斯分类器</strong>。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--支持向量机</title><link>https://lumos-nova.github.io/post/study-notes-7-support-vector-machine-2wbmlc.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-7-support-vector-machine-2wbmlc.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--支持向量机</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记7支持向量机">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b07%e6%94%af%e6%8c%81%e5%90%91%e9%87%8f%e6%9c%ba"></a>
+学习笔记(7)&ndash;支持向量机
+</h1><blockquote>
+<p>上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型&ndash;MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部/全局最小以及目前十分火热的深度学习的概念。本篇围绕的核心则是曾经一度取代过神经网络的另一种监督学习算法&ndash;<strong>支持向量机</strong>（Support Vector Machine），简称<strong>SVM</strong>。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--神经网络</title><link>https://lumos-nova.github.io/post/study-notes-6-neural-network-z121c1s.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-6-neural-network-z121c1s.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--神经网络</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记6神经网络">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b06%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c"></a>
+学习笔记(6)&ndash;神经网络
+</h1><blockquote>
+<p>上篇主要讨论了决策树算法。首先从决策树的基本概念出发，引出决策树基于树形结构进行决策，进一步介绍了构造决策树的递归流程以及其递归终止条件，在递归的过程中，划分属性的选择起到了关键作用，因此紧接着讨论了三种评估属性划分效果的经典算法，介绍了剪枝策略来解决原生决策树容易产生的过拟合问题，最后简述了属性连续值/缺失值的处理方法。本篇将讨论现阶段十分热门的另一个经典监督学习算法&ndash;神经网络（neural network）。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--决策树</title><link>https://lumos-nova.github.io/post/study-notes-5-decision-tree-1jmsfw.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-5-decision-tree-1jmsfw.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--决策树</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记5决策树">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b05%e5%86%b3%e7%ad%96%e6%a0%91"></a>
+学习笔记(5)&ndash;决策树
+</h1><blockquote>
+<p>上篇主要介绍和讨论了线性模型。首先从最简单的最小二乘法开始，讨论输入属性有一个和多个的情形，接着通过广义线性模型延伸开来，将预测连续值的回归问题转化为分类问题，从而引入了对数几率回归，最后线性判别分析LDA将样本点进行投影，多分类问题实质上通过划分的方法转化为多个二分类问题进行求解。本篇将讨论另一种被广泛使用的分类算法&ndash;决策树（Decision Tree）。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--线性模型</title><link>https://lumos-nova.github.io/post/study-notes-4-linear-model-z20rwnk.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-4-linear-model-z20rwnk.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--线性模型</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记4线性模型">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b04%e7%ba%bf%e6%80%a7%e6%a8%a1%e5%9e%8b"></a>
+学习笔记(4)&ndash;线性模型
+</h1><h1 id="3线性模型">
+<a class="header-anchor" href="#3%e7%ba%bf%e6%80%a7%e6%a8%a1%e5%9e%8b"></a>
+<strong>3、线性模型</strong>
+</h1><p>谈及线性模型，其实我们很早就已经与它打过交道，还记得高中数学必修3课本中那个顽皮的“最小二乘法”吗？这就是线性模型的经典算法之一：根据给定的（x，y）点对，求出一条与这些点拟合效果最好的直线y=ax+b，之前我们利用下面的公式便可以计算出拟合直线的系数a,b（3.1中给出了具体的计算过程），从而对于一个新的x，可以预测它所对应的y值。前面我们提到：在机器学习的术语中，当预测值为连续值时，称为“回归问题”，离散值时为“分类问题”。本篇先从线性回归任务开始，接着讨论分类和多分类问题。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--假设检验&amp;方差&amp;偏差</title><link>https://lumos-nova.github.io/post/study-notes-3-hypothesis-testing-g4qjo.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-3-hypothesis-testing-g4qjo.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--假设检验&方差&偏差</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记3假设检验方差偏差">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b03%e5%81%87%e8%ae%be%e6%a3%80%e9%aa%8c%e6%96%b9%e5%b7%ae%e5%81%8f%e5%b7%ae"></a>
+学习笔记(3)&ndash;假设检验&amp;方差&amp;偏差
+</h1><blockquote>
+<p>在上两篇中，我们介绍了多种常见的评估方法和性能度量标准，这样我们就可以根据数据集以及模型任务的特征，选择出最合适的评估和性能度量方法来计算出学习器的“测试误差“。但由于“测试误差”受到很多因素的影响，例如：算法随机性(例如常见的K-Means)或测试集本身的选择，使得同一模型每次得到的结果不尽相同，同时测试误差是作为泛化误差的近似，并不能代表学习器真实的泛化性能，那如何对单个或多个学习器在不同或相同测试集上的性能度量结果做比较呢？这就是比较检验。最后偏差与方差是解释学习器泛化性能的一种重要工具。本篇延续上一篇的内容，主要讨论了比较检验、方差与偏差。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--性能度量</title><link>https://lumos-nova.github.io/post/study-notes-2-performance-measurement-z8e2ri.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-2-performance-measurement-z8e2ri.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--性能度量</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记2性能度量">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b02%e6%80%a7%e8%83%bd%e5%ba%a6%e9%87%8f"></a>
+学习笔记(2)&ndash;性能度量
+</h1><blockquote>
+<p>本篇主要是包括：<strong>性能度量</strong>、<strong>比较检验</strong>和<strong>偏差与方差</strong>。在上一篇中，我们解决了评估学习器泛化性能的方法，即用测试集的“测试误差”作为“泛化误差”的近似，当我们划分好训练/测试集后，那如何计算“测试误差”呢？这就是性能度量，例如：均方差，错误率等，即“测试误差”的一个评价标准。有了评估方法和性能度量，就可以计算出学习器的“测试误差”，但由于“测试误差”受到很多因素的影响，例如：算法随机性或测试集本身的选择，那如何对两个或多个学习器的性能度量结果做比较呢？这就是比较检验。最后偏差与方差是解释学习器泛化性能的一种重要工具。</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item><item><title>机器学习读书笔记--绪论</title><link>https://lumos-nova.github.io/post/study-notes-1-introduction-z1yueuq.html</link><pubDate>Fri, 05 Dec 2025 02:34:44 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/study-notes-1-introduction-z1yueuq.html</guid><description>
+<![CDATA[<h1>机器学习读书笔记--绪论</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="学习笔记1绪论">
+<a class="header-anchor" href="#%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b01%e7%bb%aa%e8%ae%ba"></a>
+学习笔记(1)&ndash;绪论
+</h1><h2 id="1--绪论">
+<a class="header-anchor" href="#1--%e7%bb%aa%e8%ae%ba"></a>
+<strong>1  绪论</strong>
+</h2><p>傍晚小街路面上沁出微雨后的湿润，和熙的细风吹来，抬头看看天边的晚霞，嗯，明天又是一个好天气。走到水果摊旁，挑了个根蒂蜷缩、敲起来声音浊响的青绿西瓜，一边满心期待着皮薄肉厚瓢甜的爽落感，一边愉快地想着，这学期狠下了工夫，基础概念弄得清清楚楚，算法作业也是信手拈来，这门课成绩一定差不了！哈哈，也希望自己这学期的machine learning课程取得一个好成绩！</p>
+        
+        <hr><p>本文2025-12-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-12-05</p>]]></description><category>AI</category></item></channel></rss>

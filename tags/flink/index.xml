@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Flink on 霁川</title><link>https://lumos-nova.github.io/tags/flink/</link><description>Recent content from 霁川</description><generator>Hugo</generator><language>zh-cn</language><managingEditor>charlie552@126.com (Lumos)</managingEditor><webMaster>charlie552@126.com (Lumos)</webMaster><copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright><lastBuildDate>Sat, 29 Nov 2025 02:50:39 +0800</lastBuildDate><atom:link href="https://lumos-nova.github.io/tags/flink/index.xml" rel="self" type="application/rss+xml"/><item><title>Flink-job执行流程</title><link>https://lumos-nova.github.io/post/flinkjob-execution-process-z1padnr.html</link><pubDate>Fri, 22 Dec 2023 17:36:36 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/flinkjob-execution-process-z1padnr.html</guid><description>
+<![CDATA[<h1>Flink-job执行流程</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="flink-job执行流程">
+<a class="header-anchor" href="#flink-job%e6%89%a7%e8%a1%8c%e6%b5%81%e7%a8%8b"></a>
+Flink-job执行流程
+</h1><h2 id="任务流程从开始到完成提交">
+<a class="header-anchor" href="#%e4%bb%bb%e5%8a%a1%e6%b5%81%e7%a8%8b%e4%bb%8e%e5%bc%80%e5%a7%8b%e5%88%b0%e5%ae%8c%e6%88%90%e6%8f%90%e4%ba%a4"></a>
+任务流程（从开始到完成提交）
+</h2><h3 id="两阶段提交协议2pc">
+<a class="header-anchor" href="#%e4%b8%a4%e9%98%b6%e6%ae%b5%e6%8f%90%e4%ba%a4%e5%8d%8f%e8%ae%ae2pc"></a>
+两阶段提交协议（2PC）
+</h3><p>两阶段提交协议（Two-Phase Commit，2PC）是很常用的解决分布式事务问题的方式，它可以保证在分布式事务中，要么所有参与进程都提交事务，要么都取消，即实现 ACID 中的 A （原子性）。  在数据一致性的环境下，其代表的含义是：要么所有备份数据同时更改某个数值，要么都不改，以此来达到数据的强一致性。  两阶段提交协议中有两个重要角色，协调者（Coordinator）和参与者（Participant），其中协调者只有一个，起到分布式事务的协调管理作用，参与者有多个。  顾名思义，两阶段提交将提交过程划分为连续的两个阶段：<!-- raw HTML omitted -->表决阶段（Voting）和提交阶段（Commit）<!-- raw HTML omitted -->。</p>
+        
+        <hr><p>本文2023-12-22首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-11-29</p>]]></description><category>大数据</category></item><item><title>为什么 ValueState&lt;Boolean&gt; flagState 需要用 transient 修饰</title><link>https://lumos-nova.github.io/post/why-valuestate-boolean-flagstate-needs-to-be-modified-with-transient-z1jxmmp.html</link><pubDate>Wed, 05 Nov 2025 04:28:01 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/why-valuestate-boolean-flagstate-needs-to-be-modified-with-transient-z1jxmmp.html</guid><description>
+<![CDATA[<h1>为什么 ValueState<Boolean> flagState 需要用 transient 修饰</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="为什么-valuestate-flagstate-需要用-transient-修饰">
+<a class="header-anchor" href="#%e4%b8%ba%e4%bb%80%e4%b9%88-valuestate-flagstate-%e9%9c%80%e8%a6%81%e7%94%a8-transient-%e4%bf%ae%e9%a5%b0"></a>
+为什么 ValueState<!-- raw HTML omitted --> flagState 需要用 transient 修饰
+</h1><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="c1">//解释以下代码中 ValueState&lt;Boolean&gt; flagState 为什么要用transient 修饰?</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FraudDetector</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">KeyedProcessFunction</span><span class="o">&lt;</span><span class="n">Long</span><span class="p">,</span><span class="w"> </span><span class="n">Transaction</span><span class="p">,</span><span class="w"> </span><span class="n">Alert</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">serialVersionUID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1L</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="n">ValueState</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flagState</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@Override</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="n">OpenContext</span><span class="w"> </span><span class="n">openContext</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">ValueStateDescriptor</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="n">flagDescriptor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ValueStateDescriptor</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="s">&#34;flag&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">Types</span><span class="p">.</span><span class="na">BOOLEAN</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">flagState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getRuntimeContext</span><span class="p">().</span><span class="na">getState</span><span class="p">(</span><span class="n">flagDescriptor</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>在这段Flink代码中，<code>ValueState&lt;Boolean&gt; flagState</code>​被声明为<code>transient</code>是因为以下几个关键原因：</p>
+        
+        <hr><p>本文2025-11-05首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-11-29</p>]]></description><category>大数据</category></item></channel></rss>

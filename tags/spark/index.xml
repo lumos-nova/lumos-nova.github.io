@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Spark on 霁川</title><link>https://lumos-nova.github.io/tags/spark/</link><description>Recent content from 霁川</description><generator>Hugo</generator><language>zh-cn</language><managingEditor>charlie552@126.com (Lumos)</managingEditor><webMaster>charlie552@126.com (Lumos)</webMaster><copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright><lastBuildDate>Sat, 29 Nov 2025 03:48:10 +0800</lastBuildDate><atom:link href="https://lumos-nova.github.io/tags/spark/index.xml" rel="self" type="application/rss+xml"/><item><title>SparkRDD</title><link>https://lumos-nova.github.io/post/sparkrdd-2gmsnc.html</link><pubDate>Tue, 25 Nov 2025 10:01:35 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/sparkrdd-2gmsnc.html</guid><description>
+<![CDATA[<h1>SparkRDD</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="sparkrdd">
+<a class="header-anchor" href="#sparkrdd"></a>
+SparkRDD
+</h1><h1 id="spark-rdd弹性分布式数据集">
+<a class="header-anchor" href="#spark-rdd%e5%bc%b9%e6%80%a7%e5%88%86%e5%b8%83%e5%bc%8f%e6%95%b0%e6%8d%ae%e9%9b%86"></a>
+Spark RDD（弹性分布式数据集）
+</h1><h2 id="1-概念">
+<a class="header-anchor" href="#1-%e6%a6%82%e5%bf%b5"></a>
+1. 概念
+</h2><p>弹性分布式数据集（Resilient Distributed Dataset，RDD），这个数据集的全部或部分可以缓存在内存中，并且可以在多次计算时重用。RDD其实就是一个分布在多个节点上的数据集合。</p>
+        
+        <hr><p>本文2025-11-25首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-11-29</p>]]></description><category>大数据</category></item><item><title>SparkSQL</title><link>https://lumos-nova.github.io/post/sparksql-7lnsx.html</link><pubDate>Tue, 25 Nov 2025 10:01:59 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/sparksql-7lnsx.html</guid><description>
+<![CDATA[<h1>SparkSQL</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="sparksql">
+<a class="header-anchor" href="#sparksql"></a>
+SparkSQL
+</h1><h1 id="sparksql概念">
+<a class="header-anchor" href="#sparksql%e6%a6%82%e5%bf%b5"></a>
+SparkSQL概念
+</h1><p><strong>定义：</strong> 专门用来处理结构化数据大数据组件</p>
+<h1 id="创建dataframe">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%badataframe"></a>
+创建DataFrame
+</h1><h2 id="创建sparksession">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%basparksession"></a>
+创建SparkSession
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-properties" data-lang="properties"><span class="line"><span class="cl"><span class="c1"># 创建</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#builder：构建者，</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#构建者（建造者）模式</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#master：程序运行的模式，Local、spark://node1:7077,yarn</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#applicationName：应用名</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#getOrCreate：获取或者创建，</span>
+</span></span><span class="line"><span class="cl"><span class="na">spark</span> <span class="o">=</span> <span class="s">SparkSession.builder.master(&#34;local[2]&#34;).appName(&#34;SparkSession&#34;).getOrCreate()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 销毁</span>
+</span></span><span class="line"><span class="cl"><span class="err">spark.stop()</span>
+</span></span></code></pre></div><h2 id="自动推断类型转换">
+<a class="header-anchor" href="#%e8%87%aa%e5%8a%a8%e6%8e%a8%e6%96%ad%e7%b1%bb%e5%9e%8b%e8%bd%ac%e6%8d%a2"></a>
+自动推断类型转换
+</h2><p><strong>问题1：工作中如果遇到了数据源是半结构化数据或者特殊格式的数据，能否直接使用SparkSQL进行处理？</strong>
+不能
+SparkCore：适用于结构化或者非结构化的数据的处理
+SparkSQL：适用于结构化数据的处理
+解决：先用SparkCore将非结构化数据进行清洗转化成结构化数据，然后使用SparkSQL进行统计分析</p>
+        
+        <hr><p>本文2025-11-25首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-11-29</p>]]></description><category>大数据</category></item><item><title>Spark概述</title><link>https://lumos-nova.github.io/post/spark-overview-z2gkjqr.html</link><pubDate>Tue, 25 Nov 2025 10:03:09 +0800</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/spark-overview-z2gkjqr.html</guid><description>
+<![CDATA[<h1>Spark概述</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h1 id="spark概述">
+<a class="header-anchor" href="#spark%e6%a6%82%e8%bf%b0"></a>
+Spark概述
+</h1><h1 id="spark概述及主要组件">
+<a class="header-anchor" href="#spark%e6%a6%82%e8%bf%b0%e5%8f%8a%e4%b8%bb%e8%a6%81%e7%bb%84%e4%bb%b6"></a>
+Spark概述及主要组件
+</h1><h2 id="1-大数据开发的总体架构">
+<a class="header-anchor" href="#1-%e5%a4%a7%e6%95%b0%e6%8d%ae%e5%bc%80%e5%8f%91%e7%9a%84%e6%80%bb%e4%bd%93%e6%9e%b6%e6%9e%84"></a>
+1. 大数据开发的总体架构
+</h2><p><img src="http://img.charlee.top/blog202311251315350.png" alt=""></p>
+<h3 id="数据来源层">
+<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e6%9d%a5%e6%ba%90%e5%b1%82"></a>
+数据来源层
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、MySQL等结构化数据库
+</span></span><span class="line"><span class="cl">2、日志、json文件、xml文件等半结构化数据
+</span></span><span class="line"><span class="cl">3、视频、语音等非结构化数据
+</span></span><span class="line"><span class="cl"> 		- 需要使用DataX、kettle、sqoop、flume、Kafka等数据传输工具将数据传入到数据仓库（HDFS）中
+</span></span></code></pre></div><h3 id="数据传输层数据采集">
+<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e4%bc%a0%e8%be%93%e5%b1%82%e6%95%b0%e6%8d%ae%e9%87%87%e9%9b%86"></a>
+数据传输层（数据采集）
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">通过各种数据传输工具，将不同源的数据统一导入到HDFS中
+</span></span><span class="line"><span class="cl">     Sqoop：Apache下免费开源的采集框架。数据源是关系型数据库。
+</span></span><span class="line"><span class="cl">     DataX：阿里巴巴提供的开源免费的数据采集框架。用于离线采集。官网：https://github.com/alibaba/dataX
+</span></span><span class="line"><span class="cl">     Kettle：可视化的方式进行数据采集。数据源很多，可以是关系型数据库，也可以是其他。
+</span></span><span class="line"><span class="cl">     Flume：Apache下，专门采集日志的框架（JS埋点、Nginx访问日志），实时采集的框架
+</span></span><span class="line"><span class="cl">     Canal：阿里巴巴提供的开源免费数据采集框架。用于实时采集。https://github.com/alibaba/canal
+</span></span><span class="line"><span class="cl">     FlinkCDC：是阿里开源的数据采集框架，支持实时采集，可以采集增量和全量
+</span></span><span class="line"><span class="cl">     小结：采集在大数据的地位不重要，面试也不是核心点。
+</span></span></code></pre></div><h3 id="数据存储层">
+<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e5%ad%98%e5%82%a8%e5%b1%82"></a>
+数据存储层
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">将大量数据存储起来，来满足数据的快速检索与统计
+</span></span><span class="line"><span class="cl">     HDFS:Hadoop Distributed File System（Hadoop分布式文件系统）。
+</span></span><span class="line"><span class="cl">     Hive:不存储数据。
+</span></span><span class="line"><span class="cl">     HBase:本质上也是把数据存储在HDFS上。
+</span></span><span class="line"><span class="cl">     Kafka:可以存储海量数据。不能永久存储，它属于消息队列，只是临时存储。
+</span></span><span class="line"><span class="cl">     ElasticSearch: ES，可以存储海量数据。用于搜索领域。
+</span></span><span class="line"><span class="cl">     对象存储（Object Storage）: OSS（阿里云）、MinIO（开源免费）、AWS（亚马逊对象存储，S3）存储空间利用率要高。
+</span></span></code></pre></div><h3 id="资源管理层">
+<a class="header-anchor" href="#%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e5%b1%82"></a>
+资源管理层
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">对分布式系统的资源进行统一管理
+</span></span><span class="line"><span class="cl">     Yarn: 专用的大数据 资源管理框架，通用资源管理系统，通常用于管理CPU、内存，不仅可以集成Hadoop还能集成Spark\Flink等大数据框架
+</span></span></code></pre></div><h3 id="数据计算层">
+<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e8%ae%a1%e7%ae%97%e5%b1%82"></a>
+数据计算层
+</h3><p><img src="http://img.charlee.top/blog202311251316485.png" alt=""></p>
+        
+        <hr><p>本文2025-11-25首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-11-29</p>]]></description><category>大数据</category></item></channel></rss>

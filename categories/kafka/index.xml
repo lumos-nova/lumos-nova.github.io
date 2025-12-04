@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kafka on 霁川</title><link>https://lumos-nova.github.io/categories/kafka/</link><description>Recent content from 霁川</description><generator>Hugo</generator><language>zh-cn</language><managingEditor>charlie552@126.com (Lumos)</managingEditor><webMaster>charlie552@126.com (Lumos)</webMaster><copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright><lastBuildDate>Sat, 15 Mar 2025 11:00:00 -0700</lastBuildDate><atom:link href="https://lumos-nova.github.io/categories/kafka/index.xml" rel="self" type="application/rss+xml"/><item><title>Windows安装Kafka_4.1.0</title><link>https://lumos-nova.github.io/post/windows%E5%AE%89%E8%A3%85kafka_4.1.0/</link><pubDate>Sat, 15 Mar 2025 11:00:00 -0700</pubDate><author>charlie552@126.com (Lumos)</author><guid>https://lumos-nova.github.io/post/windows%E5%AE%89%E8%A3%85kafka_4.1.0/</guid><description>
+<![CDATA[<h1>Windows安装Kafka_4.1.0</h1><p>作者：Lumos（charlie552@126.com）</p>
+        
+          <h2 id="下载-kafka">
+<a class="header-anchor" href="#%e4%b8%8b%e8%bd%bd-kafka"></a>
+下载 Kafka
+</h2><p>访问 <a href="https://kafka.apache.org/downloads">Apache Kafka 官网</a>，选择 Binary Downloads，下载 <code>kafka_2.13-4.1.0.tgz</code>（支持 Windows/Linux）。</p>
+<h2 id="依赖项">
+<a class="header-anchor" href="#%e4%be%9d%e8%b5%96%e9%a1%b9"></a>
+依赖项
+</h2><p>Kafka 4.0 基于 JDK 17 编译，需提前安装并配置 <code>JAVA_HOME</code> 环境变量。</p>
+        
+        <hr><p>本文2025-03-15首发于<a href='https://lumos-nova.github.io/'>霁川</a>，最后修改于2025-03-15</p>]]></description><category>Kafka</category></item></channel></rss>
